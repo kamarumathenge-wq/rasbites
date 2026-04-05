@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ras Bites & Wines</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0e0b08;
+    --warm: #1a1208;
+    --gold: #c9952a;
+    --gold-light: #e8b84b;
+    --cream: #f5ede0;
+    --red: #9b2a2a;
+    --text: #f0e6d3;
+    --muted: #a08060;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 2.5rem;
+    background: rgba(14,11,8,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,149,42,0.15);
+  }
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+  }
+  .logo span { color: var(--cream); font-style: italic; }
+  nav ul { list-style: none; display: flex; gap: 2rem; }
+  nav ul a {
+    color: var(--muted); text-decoration: none;
+    font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  nav ul a:hover { color: var(--gold); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+    padding: 0 2.5rem;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 70% 50%, rgba(155,42,42,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse at 20% 80%, rgba(201,149,42,0.12) 0%, transparent 50%),
+      linear-gradient(135deg, #0e0b08 0%, #1a1208 100%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image: linear-gradient(var(--gold) 1px, transparent 1px),
+                      linear-gradient(90deg, var(--gold) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 700px;
+    animation: fadeUp 1s ease forwards;
+  }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(201,149,42,0.15);
+    border: 1px solid rgba(201,149,42,0.4);
+    color: var(--gold);
+    font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+    padding: 0.4rem 1rem; border-radius: 2px;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    line-height: 1.05;
+    color: var(--cream);
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 em {
+    color: var(--gold);
+    font-style: italic;
+    display: block;
+  }
+  .hero p {
+    font-size: 1.05rem; color: var(--muted);
+    line-height: 1.7; max-width: 480px;
+    margin-bottom: 2.5rem;
+  }
+  .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    background: var(--gold); color: var(--black);
+    padding: 0.9rem 2rem; border-radius: 3px;
+    font-weight: 500; font-size: 0.95rem;
+    text-decoration: none; transition: background 0.3s, transform 0.2s;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    border: 1px solid rgba(201,149,42,0.4); color: var(--cream);
+    padding: 0.9rem 2rem; border-radius: 3px;
+    font-size: 0.95rem; text-decoration: none;
+    transition: border-color 0.3s, transform 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--gold); transform: translateY(-2px); }
+
+  /* FLOATING ELEMENTS */
+  .float-badge {
+    position: absolute; right: 8%; top: 30%;
+    width: 180px; height: 180px;
+    border: 1px solid rgba(201,149,42,0.3);
+    border-radius: 50%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    animation: spin 20s linear infinite;
+    opacity: 0.7;
+  }
+  .float-badge-inner {
+    position: absolute; inset: 15px;
+    border: 1px dashed rgba(201,149,42,0.2);
+    border-radius: 50%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+  }
+  .float-badge-inner span:first-child {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; color: var(--gold);
+  }
+  .float-badge-inner span:last-child {
+    font-size: 0.65rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTION SHARED */
+  section { padding: 6rem 2.5rem; }
+  .section-label {
+    font-size: 0.7rem; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 0.8rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--cream); margin-bottom: 1rem;
+  }
+  .divider {
+    width: 60px; height: 2px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    margin-bottom: 3rem;
+  }
+
+  /* MENU */
+  #menu { background: var(--warm); }
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem; margin-top: 1rem;
+  }
+  .menu-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,149,42,0.12);
+    border-radius: 4px; padding: 1.8rem;
+    transition: border-color 0.3s, transform 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .menu-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.4s;
+  }
+  .menu-card:hover { border-color: rgba(201,149,42,0.35); transform: translateY(-4px); }
+  .menu-card:hover::before { transform: scaleX(1); }
+  .menu-emoji { font-size: 2.2rem; margin-bottom: 1rem; }
+  .menu-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem; color: var(--cream);
+    margin-bottom: 0.5rem;
+  }
+  .menu-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+  .menu-price {
+    margin-top: 1rem;
+    font-size: 1rem; color: var(--gold); font-weight: 500;
+  }
+
+  /* ABOUT */
+  #about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: center;
+  }
+  .about-visual {
+    position: relative;
+    height: 400px;
+  }
+  .about-box {
+    position: absolute;
+    border: 1px solid rgba(201,149,42,0.2);
+    border-radius: 4px;
+  }
+  .about-box-1 {
+    inset: 0;
+    background: linear-gradient(135deg, rgba(155,42,42,0.2), rgba(201,149,42,0.1));
+    display: flex; align-items: center; justify-content: center;
+  }
+  .about-box-1 span {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem; opacity: 0.4;
+  }
+  .about-stat {
+    position: absolute; bottom: -20px; right: -20px;
+    background: var(--gold); color: var(--black);
+    padding: 1.5rem; border-radius: 4px;
+    text-align: center;
+  }
+  .about-stat strong {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+  }
+  .about-stat span { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; }
+  .about-text p { color: var(--muted); line-height: 1.8; margin-bottom: 1.2rem; font-size: 0.95rem; }
+
+  /* INFO STRIP */
+  .info-strip {
+    background: var(--warm);
+    border-top: 1px solid rgba(201,149,42,0.1);
+    border-bottom: 1px solid rgba(201,149,42,0.1);
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    padding: 3rem 2.5rem; gap: 2rem;
+  }
+  .info-item { text-align: center; }
+  .info-icon { font-size: 1.8rem; margin-bottom: 0.8rem; }
+  .info-item h4 {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold); margin-bottom: 0.4rem;
+  }
+  .info-item p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+  /* ORDER CTA */
+  #order {
+    text-align: center;
+    background: linear-gradient(135deg, #1a0f0f, #0e0b08);
+    position: relative; overflow: hidden;
+  }
+  #order::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, rgba(201,149,42,0.08) 0%, transparent 70%);
+  }
+  #order .section-title { position: relative; }
+  #order p { color: var(--muted); max-width: 500px; margin: 0 auto 2.5rem; line-height: 1.7; position: relative; }
+  .whatsapp-btn {
+    display: inline-flex; align-items: center; gap: 0.8rem;
+    background: #25D366; color: white;
+    padding: 1.1rem 2.5rem; border-radius: 3px;
+    font-size: 1rem; font-weight: 500;
+    text-decoration: none; position: relative;
+    transition: background 0.3s, transform 0.2s;
+    box-shadow: 0 8px 30px rgba(37,211,102,0.25);
+  }
+  .whatsapp-btn:hover { background: #1ebe5d; transform: translateY(-3px); }
+  .whatsapp-icon { width: 22px; height: 22px; fill: white; }
+
+  /* FOOTER */
+  footer {
+    background: #080604;
+    padding: 2.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid rgba(201,149,42,0.1);
+    flex-wrap: wrap; gap: 1rem;
+  }
+  footer p { font-size: 0.8rem; color: var(--muted); }
+  footer .logo { font-size: 1.1rem; }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav ul { display: none; }
+    .float-badge { display: none; }
+    #about { grid-template-columns: 1fr; }
+    .about-visual { height: 250px; margin-bottom: 3rem; }
+    footer { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Ras <span>Bites & Wines</span></div>
+  <ul>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#order">Order</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-tag">🍔 Fast Food & Fine Wines</div>
+    <h1>Good Food.<em>Good Vibes.</em></h1>
+    <p>Fresh bites, bold flavours, and carefully selected wines — all in one spot. Whether you're grabbing a quick meal or settling in, Ras Bites & Wines has you covered.</p>
+    <div class="btn-group">
+      <a href="#menu" class="btn-primary">🍽️ View Menu</a>
+      <a href="#order" class="btn-secondary">📲 Order Now</a>
+    </div>
+  </div>
+  <div class="float-badge">
+    <div class="float-badge-inner">
+      <span>🍷</span>
+      <span>Est. 2022</span>
+    </div>
+  </div>
+</section>
+
+<!-- INFO STRIP -->
+<div class="info-strip">
+  <div class="info-item">
+    <div class="info-icon">📍</div>
+    <h4>Location</h4>
+    <p>Nairobi, Kenya<br>Ask us for directions</p>
+  </div>
+  <div class="info-item">
+    <div class="info-icon">🕐</div>
+    <h4>Opening Hours</h4>
+    <p>Mon – Sat: 10am – 10pm<br>Sunday: 12pm – 8pm</p>
+  </div>
+  <div class="info-item">
+    <div class="info-icon">🛵</div>
+    <h4>Order & Delivery</h4>
+    <p>Order via WhatsApp<br>Quick & Easy</p>
+  </div>
+  <div class="info-item">
+    <div class="info-icon">💳</div>
+    <h4>Payment</h4>
+    <p>Cash & M-Pesa<br>Accepted</p>
+  </div>
+</div>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="section-label">What We Serve</div>
+  <h2 class="section-title">Our Menu</h2>
+  <div class="divider"></div>
+  <div class="menu-grid">
+    <div class="menu-card">
+      <div class="menu-emoji">🍔</div>
+      <h3>Signature Burgers</h3>
+      <p>Juicy patties, toasted buns, fresh veggies and our secret sauce. Available in beef, chicken and veggie options.</p>
+      <div class="menu-price">From KSh 350</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-emoji">🍟</div>
+      <h3>Crispy Fries & Sides</h3>
+      <p>Golden fries, onion rings, coleslaw and loaded sides. Perfect with any meal or as a standalone snack.</p>
+      <div class="menu-price">From KSh 150</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-emoji">🌯</div>
+      <h3>Wraps & Shawarmas</h3>
+      <p>Freshly rolled wraps packed with grilled meat, crunchy veg and our house sauce. Quick, filling, delicious.</p>
+      <div class="menu-price">From KSh 300</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-emoji">🍗</div>
+      <h3>Chicken Bites</h3>
+      <p>Tender, well-seasoned chicken pieces — fried to golden perfection. Great for sharing or solo indulgence.</p>
+      <div class="menu-price">From KSh 250</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-emoji">🍷</div>
+      <h3>Wines & Drinks</h3>
+      <p>A curated selection of red and white wines, plus soft drinks, juices and water to complete your meal.</p>
+      <div class="menu-price">From KSh 200</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-emoji">🎉</div>
+      <h3>Combo Deals</h3>
+      <p>Burger + Fries + Drink combos at unbeatable prices. Great value for individuals or groups.</p>
+      <div class="menu-price">From KSh 500</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-visual">
+    <div class="about-box about-box-1"><span>🍽️</span></div>
+    <div class="about-stat">
+      <strong>100%</strong>
+      <span>Fresh Daily</span>
+    </div>
+  </div>
+  <div class="about-text">
+    <div class="section-label">Our Story</div>
+    <h2 class="section-title">Made with Love,<br>Served with Pride</h2>
+    <div class="divider"></div>
+    <p>Ras Bites & Wines started with a simple idea — great food shouldn't be complicated. We set out to create a space where you could enjoy quality fast food alongside a good drink without breaking the bank.</p>
+    <p>Every item on our menu is prepared fresh. We source quality ingredients and put real care into every order — because we believe you deserve more than just a meal. You deserve an experience.</p>
+    <p>Whether you're stopping by for a quick bite or ordering from home, we bring the same energy every single time. Welcome to the Ras family.</p>
+  </div>
+</section>
+
+<!-- ORDER CTA -->
+<section id="order">
+  <div class="section-label">Ready to Eat?</div>
+  <h2 class="section-title">Place Your Order</h2>
+  <p>It's simple — send us a WhatsApp message with your order and we'll get it sorted. Fast, easy and no fuss.</p>
+  <a href="https://wa.me/254700000000?text=Hi%20Ras%20Bites%20%26%20Wines!%20I'd%20like%20to%20place%20an%20order%20%F0%9F%8D%94" class="whatsapp-btn" target="_blank">
+    <svg class="whatsapp-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+    Order on WhatsApp
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">Ras <span>Bites & Wines</span></div>
+  <p>© 2026 Ras Bites & Wines · Nairobi, Kenya</p>
+  <p>Made with ❤️ for good food lovers</p>
+</footer>
+
+</body>
+</html>

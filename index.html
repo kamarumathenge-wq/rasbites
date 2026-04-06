@@ -277,7 +277,6 @@ footer p{font-size:.75rem;color:rgba(255,255,255,.35);}
     <li><a href="#menu">Menu</a></li>
     <li><a href="#stories">Stories</a></li>
     <li><a href="#editorial">Editorial</a></li>
-    <li><a href="#order">Order</a></li>
     <li><a href="https://wa.me/254710738012?text=Hi%20Ras%20Bites!%20I'd%20like%20to%20order%20🍔" class="nav-cta">Order Now</a></li>
     <li><button class="cart-btn" onclick="toggleCart()">🛒 Cart<span class="cart-count" id="cart-count">0</span></button></li>
   </ul>
@@ -1075,16 +1074,13 @@ function updateCart() {
   const count = cart.reduce((s, i) => s + i.qty, 0);
   document.getElementById('cart-count').textContent = count;
   document.getElementById('cart-total').textContent = 'KSh ' + total.toLocaleString();
-  const empty = document.getElementById('cart-empty');
   const footer = document.getElementById('cart-footer');
   const itemsEl = document.getElementById('cart-items');
   if (cart.length === 0) {
-    empty.style.display = 'block';
     footer.style.display = 'none';
-    itemsEl.innerHTML = '<div class="cart-empty" id="cart-empty"><div class="cart-empty-icon">🍽️</div><p>Your cart is empty.<br>Browse the menu and add items!</p></div>';
+    itemsEl.innerHTML = '<div class="cart-empty"><div class="cart-empty-icon">🍽️</div><p>Your cart is empty.<br>Browse the menu and add items!</p></div>';
     return;
   }
-  empty.style.display = 'none';
   footer.style.display = 'block';
   itemsEl.innerHTML = cart.map((item, idx) => `
     <div class="cart-item">
@@ -1152,3 +1148,4 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </body>
 </html>
+

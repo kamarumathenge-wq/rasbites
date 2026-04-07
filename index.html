@@ -4,1148 +4,1303 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ras Bites & Wines — South B, Nairobi</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
-:root{--red:#CC0000;--yellow:#FFD600;--green:#007A33;--orange:#FF6B00;--black:#0A0A0A;--white:#FAFAFA;--cream:#FFF8EE;--card:#141414;}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{background:var(--black);color:var(--white);font-family:'Syne',sans-serif;overflow-x:hidden;cursor:none;}
-.cursor{width:14px;height:14px;background:var(--yellow);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;mix-blend-mode:difference;}
-.cursor-ring{width:38px;height:38px;border:2px solid var(--yellow);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transition:width .2s,height .2s,opacity .2s;mix-blend-mode:difference;}
+  :root {
+    --green: #1a3a2a;
+    --green-mid: #2c5c3f;
+    --green-light: #3d7a56;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --cream: #f5f0e8;
+    --cream-dark: #e8e0cc;
+    --white: #ffffff;
+    --text-dark: #1a1a1a;
+    --text-muted: #666;
+    --red: #c0392b;
+    --radius: 12px;
+    --radius-lg: 20px;
+    --shadow: 0 4px 24px rgba(0,0,0,0.12);
+    --shadow-lg: 0 8px 40px rgba(0,0,0,0.18);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
 
-/* NAV */
-nav{position:fixed;top:0;width:100%;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:.7rem 3rem;background:rgba(10,10,10,.95);backdrop-filter:blur(16px);border-bottom:3px solid transparent;border-image:linear-gradient(90deg,var(--red) 33%,var(--yellow) 33% 66%,var(--green) 66%) 1;}
-.logo-img{height:62px;width:auto;display:block;filter:drop-shadow(0 0 10px rgba(255,214,0,.3));transition:filter .3s;}
-.logo-img:hover{filter:drop-shadow(0 0 22px rgba(255,214,0,.7));}
-nav ul{list-style:none;display:flex;gap:2rem;align-items:center;}
-nav ul a{color:rgba(250,250,250,.7);text-decoration:none;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;transition:color .2s;}
-nav ul a:hover{color:var(--yellow);}
-.nav-cta{background:var(--red)!important;color:#fff!important;padding:.55rem 1.3rem!important;border-radius:2px;}
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--green);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px; height: 60px;
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo img { height: 36px; width: 36px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gold); }
+  .nav-logo span { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 18px; color: var(--gold); letter-spacing: 0.5px; }
+  .nav-links { display: flex; gap: 24px; }
+  .nav-links a { color: var(--cream); text-decoration: none; font-size: 14px; font-weight: 500; opacity: 0.85; transition: opacity 0.2s; }
+  .nav-links a:hover { opacity: 1; color: var(--gold); }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+  .nav-wa {
+    background: #25D366; color: white; text-decoration: none;
+    padding: 7px 14px; border-radius: 20px; font-size: 13px; font-weight: 500;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .cart-btn {
+    background: var(--gold); border: none; cursor: pointer;
+    width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; transition: background 0.2s;
+  }
+  .cart-btn:hover { background: var(--gold-light); }
+  .cart-btn svg { width: 18px; height: 18px; fill: var(--green); }
+  .cart-badge {
+    position: absolute; top: -4px; right: -4px;
+    background: var(--red); color: white;
+    font-size: 10px; font-weight: 700;
+    width: 18px; height: 18px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    display: none;
+    border: 2px solid var(--green);
+  }
+  .cart-badge.visible { display: flex; }
 
-/* RASTA STRIPE */
-.rasta-stripe{height:6px;background:linear-gradient(90deg,var(--red) 33.3%,var(--yellow) 33.3% 66.6%,var(--green) 66.6%);}
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh; padding-top: 60px;
+    background: var(--green);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 100px 24px 60px;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1400&q=70');
+    background-size: cover; background-position: center;
+    opacity: 0.13;
+    filter: saturate(0.6);
+  }
+  .hero > * { position: relative; z-index: 1; }
+  .hero::before {
+    content: ''; position: absolute; inset: 0; z-index: 0;
+    background: radial-gradient(ellipse at 50% 60%, rgba(201,168,76,0.07) 0%, transparent 70%);
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.4);
+    color: var(--gold-light); font-size: 12px; font-weight: 500;
+    padding: 6px 14px; border-radius: 20px; margin-bottom: 24px; letter-spacing: 1px;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: clamp(42px, 8vw, 90px); color: var(--cream);
+    line-height: 0.95; letter-spacing: -2px; margin-bottom: 20px;
+  }
+  .hero h1 span { color: var(--gold); }
+  .hero p { color: rgba(245,240,232,0.7); font-size: 16px; max-width: 480px; line-height: 1.6; margin-bottom: 36px; }
+  .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .btn-primary {
+    background: var(--gold); color: var(--green); font-weight: 700;
+    padding: 14px 28px; border-radius: 40px; text-decoration: none; font-size: 15px;
+    transition: background 0.2s, transform 0.15s; display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .btn-secondary {
+    background: transparent; color: var(--cream); border: 1.5px solid rgba(245,240,232,0.4);
+    padding: 14px 28px; border-radius: 40px; text-decoration: none; font-size: 15px;
+    transition: border-color 0.2s, transform 0.15s;
+  }
+  .btn-secondary:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-1px); }
+  .hero-stats { display: flex; gap: 40px; margin-top: 60px; }
+  .hero-stat { text-align: center; }
+  .hero-stat strong { display: block; font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; color: var(--gold); }
+  .hero-stat span { font-size: 12px; color: rgba(245,240,232,0.6); letter-spacing: 0.5px; }
+  .hero-imgs {
+    display: flex; gap: 12px; margin-top: 40px; justify-content: center;
+  }
+  .hero-imgs img {
+    width: 140px; height: 100px; object-fit: cover; border-radius: var(--radius);
+    border: 2px solid rgba(201,168,76,0.3);
+  }
 
-/* HERO */
-.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:8rem 3rem 4rem;position:relative;overflow:hidden;gap:3rem;}
-.hero-rasta-bg{position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(204,0,0,.04) 0,rgba(204,0,0,.04) 2px,transparent 2px,transparent 40px,rgba(255,214,0,.04) 40px,rgba(255,214,0,.04) 42px,transparent 42px,transparent 80px,rgba(0,122,51,.04) 80px,rgba(0,122,51,.04) 82px,transparent 82px,transparent 120px);pointer-events:none;}
-.hero-left{position:relative;z-index:2;}
-.hero-tag{display:inline-flex;align-items:center;gap:.5rem;background:var(--green);color:#fff;font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:.4rem 1rem;margin-bottom:1.2rem;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 50%,calc(100% - 8px) 100%,0 100%);}
-.hero-tag::before{content:'●';font-size:.5rem;animation:blink 1.2s infinite;}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-.hero-logo-main{margin-bottom:1.2rem;}
-.hero-logo-main img{max-width:340px;width:100%;height:auto;filter:drop-shadow(0 8px 32px rgba(0,0,0,.8));}
-.hero-desc{font-size:1rem;color:rgba(250,250,250,.65);line-height:1.7;max-width:420px;margin-bottom:2rem;}
-.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
-.btn-main{display:inline-flex;align-items:center;gap:.7rem;background:var(--yellow);color:var(--black);padding:.95rem 2rem;font-family:'Syne',sans-serif;font-weight:800;font-size:.88rem;letter-spacing:.05em;text-transform:uppercase;text-decoration:none;transition:transform .2s,background .2s;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 50%,calc(100% - 10px) 100%,0 100%);}
-.btn-main:hover{background:var(--orange);transform:translateX(4px);}
-.btn-ghost{display:inline-flex;align-items:center;gap:.7rem;border:2px solid rgba(255,255,255,.3);color:#fff;padding:.95rem 1.8rem;font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem;letter-spacing:.05em;text-transform:uppercase;text-decoration:none;transition:border-color .2s,color .2s;}
-.btn-ghost:hover{border-color:var(--yellow);color:var(--yellow);}
-.hero-stats{display:flex;gap:2.5rem;margin-top:2.5rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,.1);}
-.stat-num{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--yellow);line-height:1;}
-.stat-label{font-size:.68rem;color:rgba(255,255,255,.5);letter-spacing:.1em;text-transform:uppercase;margin-top:.2rem;}
-.hero-right{position:relative;z-index:2;height:560px;}
-.hero-img-main{position:absolute;top:0;right:0;width:72%;height:400px;object-fit:cover;border-radius:4px;}
-.hero-img-small{position:absolute;bottom:0;left:0;width:55%;height:230px;object-fit:cover;border-radius:4px;border:4px solid var(--black);}
+  /* ── TICKER ── */
+  .ticker { background: var(--gold); overflow: hidden; padding: 10px 0; }
+  .ticker-inner { display: flex; gap: 40px; white-space: nowrap; animation: ticker 28s linear infinite; }
+  .ticker-inner span { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--green); letter-spacing: 1px; }
+  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-/* TICKERS */
-.ticker{overflow:hidden;white-space:nowrap;}
-.ticker-red{background:var(--red);padding:.65rem 0;}
-.ticker-yellow{background:var(--yellow);padding:.65rem 0;}
-.ticker-green{background:var(--green);padding:.65rem 0;}
-.ticker-inner{display:inline-flex;gap:0;animation:ticker 22s linear infinite;}
-.ticker-red .ticker-inner{animation-duration:18s;}
-.ticker-green .ticker-inner{animation-duration:26s;}
-@keyframes ticker{to{transform:translateX(-50%);}}
-.ticker-item{font-family:'Bebas Neue',sans-serif;font-size:.95rem;letter-spacing:.15em;padding:0 2rem;}
-.ticker-red .ticker-item,.ticker-green .ticker-item{color:#fff;}
-.ticker-yellow .ticker-item{color:var(--black);}
+  /* ── SECTION ── */
+  section { padding: 80px 24px; }
+  .section-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 2px;
+    color: var(--gold); text-transform: uppercase; margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: clamp(28px, 5vw, 48px); color: var(--green); line-height: 1.05;
+  }
+  .section-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 40px; flex-wrap: wrap; gap: 16px; }
 
-/* SECTION SHARED */
-.section-eyebrow{font-size:.68rem;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--green);margin-bottom:.5rem;}
-.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,5.5vw,5rem);line-height:.95;color:var(--black);}
-.section-title .red{color:var(--red);}
-.section-title .yel{color:var(--yellow);}
-.section-title .grn{color:var(--green);}
-.section-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3.5rem;}
-.rasta-side{position:absolute;left:0;top:0;bottom:0;width:7px;background:linear-gradient(180deg,var(--red) 33.3%,var(--yellow) 33.3% 66.6%,var(--green) 66.6%);}
+  /* ── MENU ── */
+  #menu { background: var(--cream); }
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px; max-width: 1200px; margin: 0 auto;
+  }
+  .menu-card {
+    background: var(--white); border-radius: var(--radius-lg);
+    overflow: hidden; cursor: pointer;
+    border: 1px solid rgba(0,0,0,0.06);
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .menu-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .menu-card img { width: 100%; height: 200px; object-fit: cover; display: block; }
+  .menu-card-body { padding: 16px; }
+  .menu-card-body h3 { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700; color: var(--green); margin-bottom: 6px; }
+  .menu-card-body p { font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px; }
+  .menu-card-footer { display: flex; align-items: center; justify-content: space-between; }
+  .price-range { font-size: 14px; font-weight: 600; color: var(--green-mid); }
+  .tap-hint { font-size: 11px; color: var(--gold); font-weight: 500; }
 
-/* MODAL */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:500;display:none;align-items:center;justify-content:center;padding:1rem;}
-.modal-overlay.open{display:flex;}
-.modal{background:var(--card);border-radius:6px;max-width:820px;width:100%;max-height:90vh;overflow-y:auto;position:relative;border:1px solid rgba(255,214,0,.15);}
-.modal-header{padding:2rem 2rem 1rem;border-bottom:1px solid rgba(255,255,255,.08);position:sticky;top:0;background:var(--card);z-index:2;display:flex;justify-content:space-between;align-items:flex-start;}
-.modal-title{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:.03em;color:var(--yellow);}
-.modal-subtitle{font-size:.82rem;color:rgba(255,255,255,.5);margin-top:.2rem;}
-.modal-close{background:none;border:none;color:rgba(255,255,255,.5);font-size:1.8rem;cursor:pointer;line-height:1;padding:.3rem .6rem;transition:color .2s;}
-.modal-close:hover{color:var(--red);}
-.modal-body{padding:1.5rem 2rem 2rem;}
-.modal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.2rem;}
-.modal-card{background:#1a1a1a;border-radius:4px;overflow:hidden;border:1px solid rgba(255,255,255,.07);transition:border-color .2s,transform .2s;}
-.modal-card:hover{border-color:rgba(255,214,0,.35);transform:translateY(-3px);}
-.modal-card img{width:100%;height:160px;object-fit:cover;display:block;}
-.modal-card-body{padding:1rem 1.1rem 1.2rem;}
-.modal-card-name{font-family:'Bebas Neue',sans-serif;font-size:1.25rem;color:var(--white);margin-bottom:.3rem;}
-.modal-card-desc{font-size:.78rem;color:rgba(255,255,255,.5);line-height:1.5;margin-bottom:.8rem;}
-.modal-card-price{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--yellow);}
-.modal-card-tag{font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:.25rem .6rem;background:var(--green);color:#fff;margin-left:.5rem;vertical-align:middle;}
-.modal-note{background:rgba(255,214,0,.08);border-left:3px solid var(--yellow);padding:.8rem 1rem;margin-bottom:1.2rem;font-size:.8rem;color:rgba(255,255,255,.7);line-height:1.5;}
-.modal-section-title{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--yellow);margin:1.5rem 0 .8rem;letter-spacing:.05em;}
-.modal-tabs{display:flex;gap:.5rem;margin-bottom:1.2rem;flex-wrap:wrap;}
-.modal-tab{padding:.45rem 1.1rem;font-family:'Syne',sans-serif;font-weight:700;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;border:1.5px solid rgba(255,255,255,.2);background:none;color:rgba(255,255,255,.5);cursor:pointer;border-radius:2px;transition:all .2s;}
-.modal-tab.active,.modal-tab:hover{border-color:var(--yellow);color:var(--yellow);}
-.modal-tab-pane{display:none;}
-.modal-tab-pane.active{display:block;}
-.spice-opts{display:flex;gap:.5rem;margin-top:.6rem;flex-wrap:wrap;}
-.spice-opt{padding:.25rem .7rem;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(255,255,255,.2);border-radius:2px;color:rgba(255,255,255,.5);}
-.spice-opt.normal{border-color:#4ade80;color:#4ade80;}
-.spice-opt.spicy{border-color:var(--orange);color:var(--orange);}
-.spice-opt.xspicy{border-color:var(--red);color:var(--red);}
+  /* ── INFO STRIP ── */
+  .info-strip {
+    background: var(--green); padding: 48px 24px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 24px; max-width: 1000px; margin: 0 auto; border-radius: var(--radius-lg);
+  }
+  .info-item { text-align: center; }
+  .info-icon { font-size: 28px; margin-bottom: 8px; }
+  .info-item h4 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; color: var(--gold); margin-bottom: 4px; }
+  .info-item p { font-size: 13px; color: rgba(245,240,232,0.7); line-height: 1.4; }
 
-/* MENU SECTION */
-#menu{padding:7rem 3rem;background:var(--cream);position:relative;overflow:hidden;}
-.menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;background:var(--black);}
-.menu-card{background:var(--cream);overflow:hidden;position:relative;transition:transform .3s;cursor:pointer;}
-.menu-card:hover{z-index:2;transform:scale(1.02);}
-.menu-card-img{width:100%;height:230px;object-fit:cover;display:block;transition:transform .5s;}
-.menu-card:hover .menu-card-img{transform:scale(1.06);}
-.menu-card-bar{height:4px;background:linear-gradient(90deg,var(--red) 33.3%,var(--yellow) 33.3% 66.6%,var(--green) 66.6%);}
-.menu-card-body{padding:1.2rem 1.5rem 1.6rem;}
-.menu-card-name{font-family:'Bebas Neue',sans-serif;font-size:1.45rem;color:var(--black);margin-bottom:.3rem;}
-.menu-card-desc{font-size:.8rem;color:rgba(10,10,10,.6);line-height:1.6;margin-bottom:.9rem;}
-.menu-card-footer{display:flex;justify-content:space-between;align-items:center;}
-.menu-price{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--red);}
-.menu-tag{font-size:.62rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:.28rem .65rem;background:var(--green);color:#fff;}
-.menu-click-hint{font-size:.65rem;color:var(--red);font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-top:.5rem;display:flex;align-items:center;gap:.3rem;}
+  /* ── EDITORIAL ── */
+  #stories { background: var(--white); }
+  .stories-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 1000px; margin: 0 auto; }
+  .story-main { grid-row: span 2; border-radius: var(--radius-lg); overflow: hidden; position: relative; cursor: pointer; }
+  .story-main img { width: 100%; height: 100%; object-fit: cover; min-height: 360px; display: block; }
+  .story-overlay {
+    position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%);
+    display: flex; flex-direction: column; justify-content: flex-end; padding: 24px;
+  }
+  .story-tag { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; color: var(--gold); text-transform: uppercase; margin-bottom: 6px; }
+  .story-overlay h3 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; color: white; line-height: 1.15; }
+  .story-overlay span { font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 6px; display: block; }
+  .story-small { border-radius: var(--radius); overflow: hidden; position: relative; cursor: pointer; }
+  .story-small img { width: 100%; height: 160px; object-fit: cover; display: block; }
+  .story-small .story-overlay { padding: 16px; }
+  .story-small .story-overlay h3 { font-size: 15px; }
 
-/* INFO STRIP */
-.info-strip{display:grid;grid-template-columns:repeat(4,1fr);}
-.info-item{padding:2.2rem 1.5rem;text-align:center;border-right:1px solid rgba(255,255,255,.15);}
-.info-item:nth-child(1){background:var(--red);}
-.info-item:nth-child(2){background:#111;border-top:4px solid var(--yellow);}
-.info-item:nth-child(3){background:var(--green);}
-.info-item:nth-child(4){background:#111;border-top:4px solid var(--red);}
-.info-item:last-child{border-right:none;}
-.info-icon{font-size:1.8rem;margin-bottom:.7rem;display:block;}
-.info-item h4{font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:.05em;color:var(--yellow);margin-bottom:.3rem;}
-.info-item p{font-size:.8rem;color:rgba(255,255,255,.8);line-height:1.5;}
+  /* ── CTA ── */
+  .cta-section {
+    background: var(--green); text-align: center; padding: 80px 24px;
+  }
+  .cta-section h2 { font-family: 'Syne', sans-serif; font-size: clamp(32px, 6vw, 60px); font-weight: 800; color: var(--cream); line-height: 1.05; margin-bottom: 16px; }
+  .cta-section h2 span { color: var(--gold); }
+  .cta-section p { color: rgba(245,240,232,0.7); font-size: 16px; max-width: 400px; margin: 0 auto 32px; line-height: 1.6; }
 
-/* STORIES */
-#stories{padding:7rem 3rem;background:var(--black);position:relative;}
-.stories-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;grid-template-rows:auto auto;gap:1.5px;background:rgba(255,255,255,.08);margin-top:3.5rem;}
-.story-card{background:var(--black);overflow:hidden;position:relative;cursor:pointer;}
-.story-card.featured{grid-row:1/3;}
-.story-img{width:100%;height:100%;min-height:260px;object-fit:cover;display:block;transition:transform .6s;filter:brightness(.75);}
-.story-card.featured .story-img{min-height:560px;}
-.story-card:hover .story-img{transform:scale(1.05);filter:brightness(.55);}
-.story-overlay{position:absolute;inset:0;padding:1.8rem;display:flex;flex-direction:column;justify-content:flex-end;background:linear-gradient(to top,rgba(10,10,10,.92) 0%,transparent 60%);}
-.story-rasta{position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--red) 33.3%,var(--yellow) 33.3% 66.6%,var(--green) 66.6%);}
-.story-cat{font-size:.63rem;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:var(--yellow);margin-bottom:.5rem;}
-.story-title{font-family:'DM Serif Display',serif;font-size:1.35rem;color:#fff;line-height:1.2;margin-bottom:.4rem;}
-.story-card.featured .story-title{font-size:2rem;}
-.story-meta{font-size:.7rem;color:rgba(255,255,255,.5);}
+  /* ── FOOTER ── */
+  footer {
+    background: #0f2018; padding: 40px 24px;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+  }
+  .footer-logo { display: flex; align-items: center; gap: 10px; }
+  .footer-logo img { height: 32px; width: 32px; border-radius: 50%; object-fit: cover; }
+  .footer-logo span { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--gold); font-size: 16px; }
+  footer p { font-size: 13px; color: rgba(245,240,232,0.4); }
 
-/* EDITORIAL */
-#editorial{padding:7rem 3rem;background:#0d0d0d;position:relative;}
-.editorial-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem;}
-.editorial-card{background:var(--card);border-radius:4px;overflow:hidden;border:1px solid rgba(255,255,255,.07);transition:border-color .3s,transform .3s;}
-.editorial-card:hover{border-color:rgba(255,214,0,.3);transform:translateY(-4px);}
-.editorial-card img{width:100%;height:200px;object-fit:cover;display:block;transition:transform .5s;filter:brightness(.85);}
-.editorial-card:hover img{transform:scale(1.04);filter:brightness(.7);}
-.editorial-card-body{padding:1.3rem;}
-.editorial-badge{display:inline-block;font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:.25rem .65rem;margin-bottom:.7rem;}
-.badge-recipe{background:var(--red);color:#fff;}
-.badge-collab{background:var(--yellow);color:var(--black);}
-.badge-review{background:var(--green);color:#fff;}
-.badge-travel{background:#7c3aed;color:#fff;}
-.badge-lifestyle{background:#0891b2;color:#fff;}
-.editorial-card-title{font-family:'DM Serif Display',serif;font-size:1.15rem;color:#fff;line-height:1.3;margin-bottom:.5rem;}
-.editorial-card-excerpt{font-size:.78rem;color:rgba(255,255,255,.5);line-height:1.6;margin-bottom:.8rem;}
-.editorial-card-meta{font-size:.68rem;color:rgba(255,255,255,.35);display:flex;gap:1rem;}
-.editorial-featured{grid-column:1/-1;background:var(--card);border-radius:4px;overflow:hidden;display:grid;grid-template-columns:1.2fr 1fr;border:1px solid rgba(255,214,0,.15);}
-.editorial-featured img{width:100%;height:340px;object-fit:cover;display:block;}
-.editorial-featured-body{padding:2.5rem;}
-.editorial-featured-body .editorial-badge{font-size:.65rem;}
-.editorial-featured-title{font-family:'DM Serif Display',serif;font-size:1.8rem;color:#fff;line-height:1.2;margin-bottom:.8rem;}
-.editorial-featured-excerpt{font-size:.88rem;color:rgba(255,255,255,.6);line-height:1.7;margin-bottom:1.2rem;}
-.collab-strip{background:linear-gradient(135deg,var(--red),#8b0000);padding:2.5rem 3rem;margin-top:2rem;border-radius:4px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:2rem;}
-.collab-strip h3{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--yellow);letter-spacing:.03em;}
-.collab-strip p{font-size:.85rem;color:rgba(255,255,255,.8);margin-top:.3rem;max-width:500px;line-height:1.6;}
-.recipe-week{background:linear-gradient(135deg,#1a1a00,#111);border:1px solid rgba(255,214,0,.25);padding:2.5rem 3rem;margin-top:1.5rem;border-radius:4px;display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:center;}
-.recipe-week img{width:100%;height:220px;object-fit:cover;border-radius:4px;}
-.recipe-week-content h3{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--yellow);letter-spacing:.03em;margin-bottom:.5rem;}
-.recipe-week-content p{font-size:.85rem;color:rgba(255,255,255,.65);line-height:1.7;margin-bottom:1rem;}
+  /* ── MODAL ── */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+    display: flex; align-items: flex-end; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal {
+    background: var(--white); width: 100%; max-width: 620px;
+    border-radius: 24px 24px 0 0; max-height: 90vh; overflow-y: auto;
+    transform: translateY(100%); transition: transform 0.35s cubic-bezier(0.32,0.72,0,1);
+  }
+  .modal-overlay.open .modal { transform: translateY(0); }
+  .modal-handle { width: 36px; height: 4px; background: #ddd; border-radius: 2px; margin: 12px auto 0; }
+  .modal-header { padding: 20px 20px 0; }
+  .modal-header h2 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; color: var(--green); }
+  .modal-note { font-size: 13px; color: var(--text-muted); background: var(--cream); padding: 10px 14px; border-radius: var(--radius); margin: 12px 0 0; display: flex; align-items: center; gap: 8px; }
+  .modal-body { padding: 16px 20px 24px; }
+  .modal-close { float: right; background: none; border: none; cursor: pointer; font-size: 22px; color: var(--text-muted); margin-top: -4px; line-height: 1; }
 
-/* ORDER CTA */
-#order{padding:7rem 3rem;background:var(--black);text-align:center;position:relative;overflow:hidden;}
-#order::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--red) 0%,var(--red) 30%,var(--yellow) 30%,var(--yellow) 60%,var(--green) 60%,var(--green) 100%);opacity:.07;pointer-events:none;}
-.order-logo{width:150px;height:150px;object-fit:contain;margin:0 auto 1.8rem;display:block;filter:drop-shadow(0 0 28px rgba(255,214,0,.4));animation:float 4s ease-in-out infinite;}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-.order-inner{position:relative;z-index:1;}
-.order-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,8vw,7rem);line-height:.9;margin-bottom:.8rem;}
-.order-title .r{color:var(--red);}
-.order-title .y{color:var(--yellow);}
-.order-title .g{color:var(--green);}
-.order-sub{font-size:1rem;color:rgba(255,255,255,.6);max-width:480px;margin:0 auto 2.5rem;line-height:1.7;}
-.btn-whatsapp{display:inline-flex;align-items:center;gap:1rem;background:#25D366;color:#fff;padding:1.1rem 2.8rem;font-family:'Syne',sans-serif;font-weight:800;font-size:.95rem;letter-spacing:.05em;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:transform .2s,box-shadow .2s;}
-.btn-whatsapp:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(37,211,102,.3);}
-.wa-icon{width:24px;height:24px;fill:#fff;flex-shrink:0;}
+  .item-card {
+    display: flex; gap: 14px; padding: 14px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.07); align-items: flex-start;
+  }
+  .item-card:last-child { border-bottom: none; }
+  .item-card img { width: 80px; height: 80px; object-fit: cover; border-radius: 10px; flex-shrink: 0; }
+  .item-info { flex: 1; }
+  .item-name { font-weight: 600; font-size: 15px; color: var(--text-dark); margin-bottom: 4px; }
+  .item-desc { font-size: 12px; color: var(--text-muted); line-height: 1.4; margin-bottom: 8px; }
+  .item-bottom { display: flex; align-items: center; justify-content: space-between; }
+  .item-price { font-weight: 700; font-size: 15px; color: var(--green-mid); }
+  .item-badge {
+    font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 10px;
+    letter-spacing: 0.5px; margin-left: 6px;
+  }
+  .badge-hot { background: #fff0ed; color: #c0392b; }
+  .badge-pop { background: #e8f5e9; color: #2e7d32; }
+  .badge-veg { background: #f3f8e8; color: #558b2f; }
+  .badge-unique { background: #fff8e1; color: #f57f17; }
 
-/* FOOTER */
-footer{background:#060606;padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;border-top:6px solid transparent;border-image:linear-gradient(90deg,var(--red) 33%,var(--yellow) 33% 66%,var(--green) 66%) 1;flex-wrap:wrap;gap:1rem;}
-.footer-logo{height:48px;width:auto;}
-footer p{font-size:.75rem;color:rgba(255,255,255,.35);}
+  .add-btn {
+    background: var(--green); color: var(--gold); border: none;
+    width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
+    font-size: 20px; font-weight: 700; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, transform 0.1s; flex-shrink: 0;
+  }
+  .add-btn:hover { background: var(--green-mid); transform: scale(1.1); }
+  .add-btn:active { transform: scale(0.95); }
 
-/* ANIMATIONS */
-.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease;}
-.reveal.visible{opacity:1;transform:none;}.hero-left,.hero-right{opacity:1!important;transform:none!important;}
+  /* Wings variant buttons */
+  .variant-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+  .variant-btn {
+    font-size: 11px; padding: 4px 10px; border-radius: 16px; cursor: pointer;
+    border: 1.5px solid var(--cream-dark); background: var(--cream); color: var(--text-dark); font-weight: 500;
+    transition: all 0.15s;
+  }
+  .variant-btn.selected { border-color: var(--green); background: var(--green); color: white; }
 
-/* MOBILE */
-@media(max-width:900px){
-  nav{padding:.6rem 1.2rem;}
-  nav ul{display:none;}
-  .logo-img{height:50px;}
-  .hero{grid-template-columns:1fr;padding:7rem 1.5rem 3rem;}
-  .hero-right{display:none;}
-  .menu-grid{grid-template-columns:1fr;}
-  .info-strip{grid-template-columns:1fr 1fr;}
-  .stories-grid{grid-template-columns:1fr;}
-  .story-card.featured{grid-row:auto;}
-  .editorial-grid{grid-template-columns:1fr;}
-  .editorial-featured{grid-template-columns:1fr;}
-  .editorial-featured img{height:220px;}
-  .collab-strip,.recipe-week{grid-template-columns:1fr;}
-  #menu,#stories,#editorial,#order{padding:4rem 1.5rem;}
-  .section-header{flex-direction:column;align-items:flex-start;gap:1rem;}
-  footer{flex-direction:column;text-align:center;}
-  .modal-grid{grid-template-columns:1fr 1fr;}
-}
-@media(max-width:560px){
-  .modal-grid{grid-template-columns:1fr;}
-  .modal{margin:.5rem;}
-  .modal-header,.modal-body{padding:1.2rem;}
-}
+  /* ── CART DRAWER ── */
+  .cart-overlay {
+    position: fixed; inset: 0; z-index: 300;
+    background: rgba(0,0,0,0.5); backdrop-filter: blur(3px);
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+  }
+  .cart-overlay.open { opacity: 1; pointer-events: all; }
+  .cart-drawer {
+    position: fixed; top: 0; right: 0; bottom: 0; z-index: 301;
+    width: min(400px, 100vw); background: var(--white);
+    transform: translateX(100%); transition: transform 0.35s cubic-bezier(0.32,0.72,0,1);
+    display: flex; flex-direction: column; box-shadow: var(--shadow-lg);
+  }
+  .cart-overlay.open .cart-drawer { transform: translateX(0); }
+  .cart-head {
+    padding: 20px; border-bottom: 1px solid var(--cream-dark);
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--green);
+  }
+  .cart-head h2 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: var(--gold); }
+  .cart-close { background: none; border: none; cursor: pointer; color: rgba(245,240,232,0.7); font-size: 24px; line-height: 1; }
+  .cart-items { flex: 1; overflow-y: auto; padding: 16px; }
+  .cart-empty {
+    text-align: center; padding: 60px 20px;
+    color: var(--text-muted); font-size: 15px;
+  }
+  .cart-empty-icon { font-size: 48px; margin-bottom: 12px; display: block; }
+  .cart-item {
+    display: flex; gap: 12px; align-items: center;
+    padding: 12px 0; border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .cart-item:last-child { border-bottom: none; }
+  .cart-item-info { flex: 1; }
+  .cart-item-name { font-weight: 600; font-size: 14px; color: var(--text-dark); }
+  .cart-item-variant { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+  .cart-item-price { font-size: 13px; color: var(--green-mid); font-weight: 600; margin-top: 4px; }
+  .qty-control { display: flex; align-items: center; gap: 8px; }
+  .qty-btn {
+    width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--cream-dark);
+    background: var(--cream); cursor: pointer; font-size: 16px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; color: var(--green);
+    transition: all 0.15s;
+  }
+  .qty-btn:hover { background: var(--green); color: white; border-color: var(--green); }
+  .qty-num { font-weight: 700; font-size: 15px; color: var(--text-dark); min-width: 20px; text-align: center; }
+  .cart-foot {
+    padding: 16px 20px; border-top: 1px solid var(--cream-dark); background: var(--cream);
+  }
+  .cart-subtotal { display: flex; justify-content: space-between; margin-bottom: 14px; }
+  .cart-subtotal span { font-size: 14px; color: var(--text-muted); }
+  .cart-subtotal strong { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; color: var(--green); }
+  .cart-wa-btn {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    background: #25D366; color: white; font-weight: 700; font-size: 15px;
+    width: 100%; padding: 14px; border-radius: 40px; text-decoration: none;
+    transition: background 0.2s;
+  }
+  .cart-wa-btn:hover { background: #1ebe5c; }
+  .cart-clear { background: none; border: none; cursor: pointer; font-size: 12px; color: var(--text-muted); text-align: center; display: block; margin: 10px auto 0; text-decoration: underline; }
 
-/* ===== CART ===== */
-.cart-btn{position:relative;background:var(--yellow)!important;color:var(--black)!important;padding:.55rem 1.3rem!important;border-radius:2px;border:none;font-family:'Syne',sans-serif;font-weight:800;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;gap:.5rem;}
-.cart-count{background:var(--red);color:#fff;border-radius:50%;width:18px;height:18px;font-size:.65rem;display:flex;align-items:center;justify-content:center;font-weight:700;position:absolute;top:-6px;right:-6px;transition:transform .2s;}
-.cart-count.bump{transform:scale(1.4);}
-.cart-drawer{position:fixed;top:0;right:-420px;width:420px;height:100vh;background:#111;z-index:800;transition:right .35s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;border-left:1px solid rgba(255,214,0,.15);}
-.cart-drawer.open{right:0;}
-.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:799;display:none;}
-.cart-overlay.open{display:block;}
-.cart-header{padding:1.2rem 1.5rem;border-bottom:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center;background:#111;position:sticky;top:0;}
-.cart-header-title{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--yellow);letter-spacing:.05em;}
-.cart-close{background:none;border:none;color:rgba(255,255,255,.5);font-size:1.6rem;cursor:pointer;line-height:1;transition:color .2s;}
-.cart-close:hover{color:var(--red);}
-.cart-items{flex:1;overflow-y:auto;padding:1rem 1.5rem;}
-.cart-empty{text-align:center;padding:4rem 1rem;color:rgba(255,255,255,.3);}
-.cart-empty-icon{font-size:3rem;margin-bottom:1rem;}
-.cart-empty p{font-size:.88rem;line-height:1.6;}
-.cart-item{display:flex;gap:1rem;padding:1rem 0;border-bottom:1px solid rgba(255,255,255,.06);align-items:flex-start;}
-.cart-item-img{width:70px;height:70px;object-fit:cover;border-radius:3px;flex-shrink:0;}
-.cart-item-info{flex:1;}
-.cart-item-name{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--white);margin-bottom:.2rem;letter-spacing:.03em;}
-.cart-item-price{font-size:.82rem;color:var(--yellow);font-weight:700;}
-.cart-item-controls{display:flex;align-items:center;gap:.5rem;margin-top:.5rem;}
-.qty-btn{width:26px;height:26px;border-radius:50%;border:1.5px solid rgba(255,255,255,.2);background:none;color:#fff;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .2s,background .2s;}
-.qty-btn:hover{border-color:var(--yellow);background:rgba(255,214,0,.1);}
-.qty-num{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--white);min-width:20px;text-align:center;}
-.remove-item{margin-left:auto;background:none;border:none;color:rgba(255,255,255,.3);font-size:.8rem;cursor:pointer;padding:.2rem .4rem;transition:color .2s;}
-.remove-item:hover{color:var(--red);}
-.cart-footer{padding:1.2rem 1.5rem;border-top:1px solid rgba(255,255,255,.08);background:#111;}
-.cart-subtotal{display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem;}
-.cart-subtotal-label{font-size:.8rem;color:rgba(255,255,255,.5);letter-spacing:.1em;text-transform:uppercase;}
-.cart-subtotal-amount{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--yellow);}
-.cart-note{font-size:.72rem;color:rgba(255,255,255,.35);margin-bottom:1rem;line-height:1.5;}
-.btn-checkout{width:100%;padding:1rem;background:var(--green);color:#fff;border:none;font-family:'Syne',sans-serif;font-weight:800;font-size:.9rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.7rem;transition:background .2s,transform .1s;}
-.btn-checkout:hover{background:#005a24;transform:translateY(-1px);}
-.btn-whatsapp-cart{width:100%;padding:.85rem;background:#25D366;color:#fff;border:none;font-family:'Syne',sans-serif;font-weight:800;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.7rem;margin-top:.6rem;transition:background .2s;}
-.btn-whatsapp-cart:hover{background:#1ebe5d;}
-/* Add to cart button in modals */
-.btn-add-cart{display:block;width:100%;margin-top:.8rem;padding:.6rem;background:var(--yellow);color:var(--black);border:none;font-family:'Syne',sans-serif;font-weight:800;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:background .2s;}
-.btn-add-cart:hover{background:var(--orange);}
+  /* ── STICKY CART BAR ── */
+  .sticky-cart {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 150;
+    background: var(--green); padding: 12px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    transform: translateY(100%); transition: transform 0.3s;
+    border-top: 2px solid var(--gold);
+  }
+  .sticky-cart.visible { transform: translateY(0); }
+  .sticky-cart-info span { font-size: 12px; color: rgba(245,240,232,0.7); }
+  .sticky-cart-info strong { display: block; font-family: 'Syne', sans-serif; font-size: 18px; color: var(--gold); }
+  .sticky-cart-btn {
+    background: var(--gold); color: var(--green); font-weight: 700;
+    border: none; padding: 10px 20px; border-radius: 24px; cursor: pointer;
+    font-size: 14px; display: flex; align-items: center; gap: 6px;
+  }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: var(--green); color: var(--cream); padding: 10px 18px; border-radius: 24px;
+    font-size: 13px; font-weight: 500; z-index: 400;
+    opacity: 0; transition: all 0.3s; pointer-events: none; white-space: nowrap;
+    border: 1px solid rgba(201,168,76,0.4);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    .stories-grid { grid-template-columns: 1fr; }
+    .story-main { grid-row: auto; }
+    .hero-stats { gap: 24px; }
+    .hero-imgs { display: none; }
+    nav { padding: 0 16px; }
+  }
+
+  /* ── REVIEWS ── */
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+  }
+  .review-card {
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(201,168,76,0.15);
+    border-radius: var(--radius-lg); padding: 24px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .review-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-2px); }
+  .review-card--featured {
+    border-color: rgba(201,168,76,0.5);
+    background: rgba(201,168,76,0.07);
+  }
+  .review-stars { color: var(--gold); font-size: 14px; letter-spacing: 2px; margin-bottom: 12px; }
+  .review-text {
+    font-size: 14px; color: rgba(245,240,232,0.8); line-height: 1.7;
+    font-style: italic; margin-bottom: 16px;
+  }
+  .review-author { display: flex; align-items: center; gap: 10px; }
+  .review-avatar {
+    width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: white;
+  }
+  .review-author strong { display: block; font-size: 13px; font-weight: 600; color: var(--cream); }
+  .review-author span { font-size: 11px; color: rgba(245,240,232,0.45); }
+
+  /* ── INSTAGRAM ── */
+  .ig-follow-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    color: white; font-weight: 600; font-size: 14px;
+    padding: 10px 20px; border-radius: 24px; text-decoration: none;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .ig-follow-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+  .ig-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 6px;
+  }
+  .ig-tile {
+    position: relative; overflow: hidden; border-radius: 10px;
+    aspect-ratio: 1; display: block; text-decoration: none;
+  }
+  .ig-tile img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform 0.35s;
+  }
+  .ig-tile:hover img { transform: scale(1.08); }
+  .ig-overlay {
+    position: absolute; inset: 0;
+    background: rgba(0,0,0,0.45);
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    opacity: 0; transition: opacity 0.25s;
+    color: white; font-size: 13px; font-weight: 600;
+  }
+  .ig-tile:hover .ig-overlay { opacity: 1; }
+
+  /* ── LOYALTY ── */
+  .loyalty-perks { display: flex; flex-direction: column; gap: 16px; }
+  .loyalty-perk {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 14px; background: var(--cream); border-radius: var(--radius);
+    border: 1px solid var(--cream-dark);
+  }
+  .perk-icon { font-size: 22px; flex-shrink: 0; line-height: 1; margin-top: 1px; }
+  .loyalty-perk strong { display: block; font-size: 14px; font-weight: 600; color: var(--green); margin-bottom: 2px; }
+  .loyalty-perk span { font-size: 12px; color: var(--text-muted); }
+
+  .loyalty-card {
+    background: linear-gradient(135deg, var(--green) 0%, var(--green-mid) 60%, #1a4a2f 100%);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 20px; padding: 28px; width: 100%; max-width: 340px;
+    box-shadow: 0 20px 60px rgba(26,58,42,0.3);
+    position: relative; overflow: hidden;
+  }
+  .loyalty-card::before {
+    content: ''; position: absolute; top: -40px; right: -40px;
+    width: 180px; height: 180px; border-radius: 50%;
+    background: rgba(201,168,76,0.07); pointer-events: none;
+  }
+  .loyalty-card-top { display: flex; align-items: center; gap: 10px; margin-bottom: 32px; }
+  .loyalty-card-member { margin-bottom: 20px; }
+  .loyalty-card-member strong { display: block; }
+  .loyalty-card-points {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .loyalty-card-bar { }
+
+  /* ── FOOTER FULL ── */
+  footer {
+    background: #0f2018; padding: 48px 24px 28px;
+  }
+  @media(max-width:640px){
+    .find-us-grid { grid-template-columns: 1fr !important; }
+    .loyalty-grid { grid-template-columns: 1fr !important; }
+    .ig-grid { grid-template-columns: repeat(3, 1fr) !important; }
+    .footer-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+  }
 </style>
 </head>
 <body>
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursor-ring"></div>
 
 <!-- NAV -->
 <nav>
-  <a href="#"><img src="https://raw.githubusercontent.com/kamarumathenge-wq/rasbites/main/logo.jpg.png" onerror="this.style.opacity='.3'" class="logo-img" alt="Ras Bites"></a>
-  <ul>
-    <li><a href="#menu">Menu</a></li>
-    <li><a href="#stories">Stories</a></li>
-    <li><a href="#editorial">Editorial</a></li>
-    <li><a href="https://wa.me/254710738012?text=Hi%20Ras%20Bites!%20I'd%20like%20to%20order%20🍔" class="nav-cta">Order Now</a></li>
-    <li><button class="cart-btn" onclick="toggleCart()">🛒 Cart<span class="cart-count" id="cart-count">0</span></button></li>
-  </ul>
+  <a href="#" class="nav-logo">
+    <img src="https://raw.githubusercontent.com/kamarumathenge-wq/rasbites/main/logo.jpg.png" alt="Ras Bites" onerror="this.style.display='none'">
+    <span>Ras Bites</span>
+  </a>
+  <div class="nav-links">
+    <a href="#menu">Menu</a>
+    <a href="#stories">Stories</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#loyalty">Loyalty</a>
+    <a href="#order">Order</a>
+  </div>
+  <div class="nav-right">
+    <a href="https://wa.me/254710738012?text=Hi%20Ras%20Bites!%20I'd%20like%20to%20order%20🍔" class="nav-wa" target="_blank">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      WhatsApp
+    </a>
+    <button class="cart-btn" onclick="toggleCart()" aria-label="View cart">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M16 10a4 4 0 01-8 0" fill="none" stroke="white" stroke-width="1.5"/></svg>
+      <span class="cart-badge" id="cartBadge">0</span>
+    </button>
+  </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-rasta-bg"></div>
-  <div class="hero-left reveal">
-    <div class="hero-tag">Open 24/7 · South B, Nairobi</div>
-    <div class="hero-logo-main">
-      <img src="https://raw.githubusercontent.com/kamarumathenge-wq/rasbites/main/logo.jpg.png" onerror="this.style.display='none'" alt="Ras Bites & Wines">
-    </div>
-    <p class="hero-desc">Fast food and fine wines, done right. Fresh bites, bold taste, hand-picked wines & signature cocktails — all at Meridian Court, South B.</p>
-    <div class="hero-btns">
-      <a href="#menu" class="btn-main">Explore Menu →</a>
-      <a href="https://wa.me/254710738012?text=Hi%20Ras%20Bites!%20I'd%20like%20to%20order%20🍔" class="btn-ghost">Order on WhatsApp</a>
-    </div>
-    <div class="hero-stats">
-      <div><div class="stat-num">24/7</div><div class="stat-label">Always Open</div></div>
-      <div><div class="stat-num">6+</div><div class="stat-label">Categories</div></div>
-      <div><div class="stat-num">KSh 150</div><div class="stat-label">Starts From</div></div>
-    </div>
+  <div class="hero-bg"></div>
+  <div class="hero-badge">⭐ Open 24/7 · South B, Nairobi</div>
+  <h1>Fast Food.<br><span>Bold Taste.</span><br>Fine Wines.</h1>
+  <p>Fresh bites, hand-picked wines & signature cocktails — all at Meridian Court, South B. Order in minutes on WhatsApp.</p>
+  <div class="hero-btns">
+    <a href="#menu" class="btn-primary">Explore Menu →</a>
+    <a href="https://wa.me/254710738012?text=Hi%20Ras%20Bites!%20I'd%20like%20to%20order%20🍔" class="btn-secondary" target="_blank">Order on WhatsApp</a>
   </div>
-  <div class="hero-right reveal">
-    <img class="hero-img-main" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=700&q=85" alt="Burger" loading="lazy">
-    <img class="hero-img-small" src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=500&q=85" alt="Wine" loading="lazy">
+  <div class="hero-stats">
+    <div class="hero-stat"><strong>24/7</strong><span>Always Open</span></div>
+    <div class="hero-stat"><strong>6+</strong><span>Categories</span></div>
+    <div class="hero-stat"><strong>KSh 150</strong><span>Starts From</span></div>
+  </div>
+  <div class="hero-imgs">
+    <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300&q=80" alt="Burger">
+    <img src="https://images.unsplash.com/photo-1562967914-608f82629710?w=300&q=80" alt="Wings">
+    <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=300&q=80" alt="Wine">
   </div>
 </section>
 
-<!-- TICKERS -->
-<div class="ticker ticker-red"><div class="ticker-inner"><span class="ticker-item">SIGNATURE BURGERS</span><span>★</span><span class="ticker-item">WAGWAN FRIES</span><span>★</span><span class="ticker-item">SHAWARMAS</span><span>★</span><span class="ticker-item">CHICKEN WINGS</span><span>★</span><span class="ticker-item">SIGNATURE BURGERS</span><span>★</span><span class="ticker-item">WAGWAN FRIES</span><span>★</span><span class="ticker-item">SHAWARMAS</span><span>★</span><span class="ticker-item">CHICKEN WINGS</span><span>★</span></div></div>
-<div class="ticker ticker-yellow"><div class="ticker-inner" style="animation-direction:reverse;animation-duration:22s"><span class="ticker-item">MAD TING COCKTAIL</span><span>✦</span><span class="ticker-item">BAD TING</span><span>✦</span><span class="ticker-item">MELLOW</span><span>✦</span><span class="ticker-item">WINES & SPIRITS</span><span>✦</span><span class="ticker-item">MAD TING COCKTAIL</span><span>✦</span><span class="ticker-item">BAD TING</span><span>✦</span><span class="ticker-item">MELLOW</span><span>✦</span><span class="ticker-item">WINES & SPIRITS</span><span>✦</span></div></div>
-<div class="ticker ticker-green"><div class="ticker-inner"><span class="ticker-item">OPEN 24/7</span><span>★</span><span class="ticker-item">MERIDIAN COURT SOUTH B</span><span>★</span><span class="ticker-item">M-PESA ACCEPTED</span><span>★</span><span class="ticker-item">ORDER ON WHATSAPP</span><span>★</span><span class="ticker-item">OPEN 24/7</span><span>★</span><span class="ticker-item">MERIDIAN COURT SOUTH B</span><span>★</span><span class="ticker-item">M-PESA ACCEPTED</span><span>★</span><span class="ticker-item">ORDER ON WHATSAPP</span><span>★</span></div></div>
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span>SIGNATURE BURGERS</span><span>✦</span>
+    <span>WAGWAN FRIES</span><span>✦</span>
+    <span>SHAWARMAS</span><span>✦</span>
+    <span>CHICKEN WINGS</span><span>✦</span>
+    <span>MAD TING COCKTAIL</span><span>✦</span>
+    <span>BAD TING</span><span>✦</span>
+    <span>MELLOW</span><span>✦</span>
+    <span>WINES & SPIRITS</span><span>✦</span>
+    <span>OPEN 24/7</span><span>✦</span>
+    <span>M-PESA ACCEPTED</span><span>✦</span>
+    <!-- duplicate for seamless loop -->
+    <span>SIGNATURE BURGERS</span><span>✦</span>
+    <span>WAGWAN FRIES</span><span>✦</span>
+    <span>SHAWARMAS</span><span>✦</span>
+    <span>CHICKEN WINGS</span><span>✦</span>
+    <span>MAD TING COCKTAIL</span><span>✦</span>
+    <span>BAD TING</span><span>✦</span>
+    <span>MELLOW</span><span>✦</span>
+    <span>WINES & SPIRITS</span><span>✦</span>
+    <span>OPEN 24/7</span><span>✦</span>
+    <span>M-PESA ACCEPTED</span><span>✦</span>
+  </div>
+</div>
 
 <!-- MENU -->
 <section id="menu">
-  <div class="rasta-side"></div>
-  <div class="section-header reveal">
+  <div class="section-header" style="max-width:1200px;margin:0 auto 40px;">
     <div>
-      <div class="section-eyebrow">What We Serve</div>
-      <div class="section-title">OUR <span class="red">MENU</span></div>
+      <p class="section-label">What We Serve</p>
+      <h2 class="section-title">Our Menu</h2>
     </div>
-    <a href="https://wa.me/254710738012" class="btn-main" style="background:var(--red);color:#fff;">Order Now →</a>
+    <a href="https://wa.me/254710738012" class="btn-primary" target="_blank">Order Now →</a>
   </div>
   <div class="menu-grid">
-
-    <!-- BURGERS -->
-    <div class="menu-card reveal" onclick="openModal('burgers')">
-      <div class="menu-card-bar"></div>
-      <img class="menu-card-img" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80" alt="Burgers" loading="lazy">
+    <div class="menu-card" onclick="openModal('burgers')">
+      <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80" alt="Burgers">
       <div class="menu-card-body">
-        <div class="menu-card-name">Signature Burgers</div>
-        <div class="menu-card-desc">Gourmet patties, toasted buns, fresh veg & secret sauce. All served with fries.</div>
-        <div class="menu-card-footer"><span class="menu-price">KSh 600 – 1,500</span><span class="menu-tag">Tap to View</span></div>
-        <div class="menu-click-hint">👆 Tap for burger options</div>
+        <h3>Signature Burgers</h3>
+        <p>Gourmet patties, toasted buns, fresh veg & secret sauce. All served with fries.</p>
+        <div class="menu-card-footer">
+          <span class="price-range">KSh 600 – 1,500</span>
+          <span class="tap-hint">Tap to order →</span>
+        </div>
       </div>
     </div>
-
-    <!-- FRIES -->
-    <div class="menu-card reveal" onclick="openModal('fries')">
-      <div class="menu-card-bar"></div>
-      <img class="menu-card-img" src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=600&q=80" alt="Fries" loading="lazy">
+    <div class="menu-card" onclick="openModal('fries')">
+      <img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=600&q=80" alt="Fries">
       <div class="menu-card-body">
-        <div class="menu-card-name">Crispy Fries & Sides</div>
-        <div class="menu-card-desc">Six legendary fries options from Wagwan to Ngwacii Cinnamon. Pick your vibe.</div>
-        <div class="menu-card-footer"><span class="menu-price">KSh 200 – 500</span><span class="menu-tag">Tap to View</span></div>
-        <div class="menu-click-hint">👆 Tap for fries options</div>
+        <h3>Crispy Fries & Sides</h3>
+        <p>Six legendary fries options from Wagwan to Ngwacii Cinnamon. Pick your vibe.</p>
+        <div class="menu-card-footer">
+          <span class="price-range">KSh 200 – 500</span>
+          <span class="tap-hint">Tap to order →</span>
+        </div>
       </div>
     </div>
-
-    <!-- SHAWARMAS -->
-    <div class="menu-card reveal" onclick="openModal('shawarma')">
-      <div class="menu-card-bar"></div>
-      <img class="menu-card-img" src="https://images.unsplash.com/photo-1600891964092-4316c288032e?w=600&q=80" alt="Shawarma" loading="lazy">
+    <div class="menu-card" onclick="openModal('shawarmas')">
+      <img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?w=600&q=80" alt="Shawarma">
       <div class="menu-card-body">
-        <div class="menu-card-name">Wraps & Shawarmas</div>
-        <div class="menu-card-desc">Ire, Gwan & Wah Gwan sizes. All come with fries & special sauce.</div>
-        <div class="menu-card-footer"><span class="menu-price">KSh 250 – 800</span><span class="menu-tag">Tap to View</span></div>
-        <div class="menu-click-hint">👆 Tap for shawarma options</div>
+        <h3>Wraps & Shawarmas</h3>
+        <p>Ire, Gwan & Wah Gwan sizes. All come with fries & special sauce.</p>
+        <div class="menu-card-footer">
+          <span class="price-range">KSh 250 – 800</span>
+          <span class="tap-hint">Tap to order →</span>
+        </div>
       </div>
     </div>
-
-    <!-- CHICKEN -->
-    <div class="menu-card reveal" onclick="openModal('chicken')">
-      <div class="menu-card-bar"></div>
-      <img class="menu-card-img" src="https://images.unsplash.com/photo-1562967914-608f82629710?w=600&q=80" alt="Chicken" loading="lazy">
+    <div class="menu-card" onclick="openModal('wings')">
+      <img src="https://images.unsplash.com/photo-1562967914-608f82629710?w=600&q=80" alt="Wings">
       <div class="menu-card-body">
-        <div class="menu-card-name">Chicken Wings</div>
-        <div class="menu-card-desc">6, 10 or 20 pieces. Normal, Spicy or Extra Spicy. Served with dipping sauce.</div>
-        <div class="menu-card-footer"><span class="menu-price">KSh 600 – 1,500</span><span class="menu-tag">Tap to View</span></div>
-        <div class="menu-click-hint">👆 Tap for wing options</div>
+        <h3>Chicken Wings</h3>
+        <p>6, 10 or 20 pieces. Normal, Spicy or Extra Spicy. Served with dipping sauce.</p>
+        <div class="menu-card-footer">
+          <span class="price-range">KSh 600 – 1,500</span>
+          <span class="tap-hint">Tap to order →</span>
+        </div>
       </div>
     </div>
-
-    <!-- DRINKS -->
-    <div class="menu-card reveal" onclick="openModal('drinks')">
-      <div class="menu-card-bar"></div>
-      <img class="menu-card-img" src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=600&q=80" alt="Drinks" loading="lazy">
+    <div class="menu-card" onclick="openModal('drinks')">
+      <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=600&q=80" alt="Drinks">
       <div class="menu-card-body">
-        <div class="menu-card-name">Drinks & Wines</div>
-        <div class="menu-card-desc">Signature cocktails, whole bottles, wines, spirits, sodas, juices, tea & coffee.</div>
-        <div class="menu-card-footer"><span class="menu-price">KSh 50 – 5,000</span><span class="menu-tag">Tap to View</span></div>
-        <div class="menu-click-hint">👆 Tap to explore drinks</div>
+        <h3>Drinks & Wines</h3>
+        <p>Signature cocktails, bottles, wines, spirits, sodas, juices, tea & coffee.</p>
+        <div class="menu-card-footer">
+          <span class="price-range">KSh 50 – 5,000</span>
+          <span class="tap-hint">Tap to order →</span>
+        </div>
       </div>
     </div>
-
-    <!-- COMBOS -->
-    <div class="menu-card reveal" onclick="openModal('combos')">
-      <div class="menu-card-bar"></div>
-      <img class="menu-card-img" src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=600&q=80" alt="Combos" loading="lazy">
+    <div class="menu-card" onclick="openModal('combos')">
+      <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=600&q=80" alt="Combos">
       <div class="menu-card-body">
-        <div class="menu-card-name">Combo Deals</div>
-        <div class="menu-card-desc">Best pairings from our full menu. Food + drinks at unbeatable prices.</div>
-        <div class="menu-card-footer"><span class="menu-price">KSh 750 – 2,500</span><span class="menu-tag">Tap to View</span></div>
-        <div class="menu-click-hint">👆 Tap for combo deals</div>
+        <h3>Combo Deals</h3>
+        <p>Best pairings from our full menu. Food + drinks at unbeatable prices.</p>
+        <div class="menu-card-footer">
+          <span class="price-range">KSh 750 – 2,500</span>
+          <span class="tap-hint">Tap to order →</span>
+        </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Info strip -->
+  <div style="max-width:1200px;margin:60px auto 0;">
+    <div class="info-strip">
+      <div class="info-item"><div class="info-icon">📍</div><h4>Location</h4><p>Meridian Court<br>South B, Nairobi</p></div>
+      <div class="info-item"><div class="info-icon">🕐</div><h4>Hours</h4><p>Open 24 Hours<br>7 Days a Week</p></div>
+      <div class="info-item"><div class="info-icon">🛵</div><h4>Delivery</h4><p>Via WhatsApp<br>Quick & Easy</p></div>
+      <div class="info-item"><div class="info-icon">💳</div><h4>Payment</h4><p>Cash & M-Pesa<br>Always Accepted</p></div>
     </div>
   </div>
 </section>
 
-<!-- INFO STRIP -->
-<div class="info-strip">
-  <div class="info-item"><span class="info-icon">📍</span><h4>Location</h4><p>Meridian Court, South B<br>Nairobi, Kenya</p></div>
-  <div class="info-item"><span class="info-icon">🕐</span><h4>Hours</h4><p>Open 24 Hours<br>7 Days a Week</p></div>
-  <div class="info-item"><span class="info-icon">🛵</span><h4>Delivery</h4><p>Via WhatsApp<br>Quick & Easy</p></div>
-  <div class="info-item"><span class="info-icon">💳</span><h4>Payment</h4><p>Cash & M-Pesa<br>Always Accepted</p></div>
-</div>
-
-<!-- FOOD STORIES -->
+<!-- STORIES -->
 <section id="stories">
-  <div class="rasta-side" style="background:linear-gradient(180deg,var(--green) 33.3%,var(--yellow) 33.3% 66.6%,var(--red) 66.6%);"></div>
-  <div class="section-header reveal">
+  <div class="section-header" style="max-width:1000px;margin:0 auto 40px;">
     <div>
-      <div class="section-eyebrow" style="color:var(--yellow)">Editorial</div>
-      <div class="section-title" style="color:#fff">MY FOOD <span class="yel">STORIES</span></div>
+      <p class="section-label">My Food Stories</p>
+      <h2 class="section-title">Editorial</h2>
     </div>
   </div>
-  <div class="stories-grid">
-    <div class="story-card featured reveal">
-      <img class="story-img" src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=800&q=85" alt="Story" loading="lazy">
+  <div class="stories-grid" style="max-width:1000px;margin:0 auto;">
+    <div class="story-main">
+      <img src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=800&q=85" alt="Story">
       <div class="story-overlay">
-        <div class="story-cat">★ Featured Story</div>
-        <div class="story-title">The Art of the Perfect Burger: Behind the Bun</div>
-        <div class="story-meta">5 min read · Food Photography</div>
+        <span class="story-tag">★ Featured · 5 min read</span>
+        <h3>The Art of the Perfect Burger: Behind the Bun</h3>
+        <span>Food Photography · March 2026</span>
       </div>
-      <div class="story-rasta"></div>
     </div>
-    <div class="story-card reveal">
-      <img class="story-img" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=85" alt="Story" loading="lazy">
+    <div class="story-small">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=85" alt="Story">
       <div class="story-overlay">
-        <div class="story-cat">Wine & Dine</div>
-        <div class="story-title">Pairing Wine with Street Food in Nairobi</div>
-        <div class="story-meta">3 min read</div>
+        <span class="story-tag">Wine & Dine · 3 min</span>
+        <h3>Pairing Wine with Street Food in Nairobi</h3>
       </div>
-      <div class="story-rasta"></div>
     </div>
-    <div class="story-card reveal">
-      <img class="story-img" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=85" alt="Story" loading="lazy">
+    <div class="story-small">
+      <img src="https://images.unsplash.com/photo-1562967914-608f82629710?w=600&q=85" alt="Story">
       <div class="story-overlay">
-        <div class="story-cat">Late Night Eats</div>
-        <div class="story-title">Why South B Never Sleeps Hungry</div>
-        <div class="story-meta">2 min read</div>
+        <span class="story-tag">Late Night · 2 min</span>
+        <h3>Why South B Never Sleeps Hungry</h3>
       </div>
-      <div class="story-rasta"></div>
     </div>
-    <div class="story-card reveal">
-      <img class="story-img" src="https://images.unsplash.com/photo-1529543544282-ea669407fca3?w=600&q=85" alt="Story" loading="lazy">
-      <div class="story-overlay">
-        <div class="story-cat">Recipe</div>
-        <div class="story-title">Our Secret Sauce — Almost Revealed</div>
-        <div class="story-meta">4 min read</div>
-      </div>
-      <div class="story-rasta"></div>
+  </div>
+
+  <!-- Editorial blurbs -->
+  <div style="max-width:1000px;margin:32px auto 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;">
+    <div style="background:var(--white);border-radius:var(--radius-lg);padding:24px;border:1px solid rgba(0,0,0,0.06);">
+      <span style="font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--gold);text-transform:uppercase;">🍟 Recipe of the Week</span>
+      <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:17px;color:var(--green);margin:10px 0 8px;line-height:1.25;">How to Make Our Ngwacii Cinnamon Fries at Home</h3>
+      <p style="font-size:13px;color:var(--text-muted);line-height:1.5;">Sweet potato, cinnamon sugar, and a touch of chilli. The recipe that broke the internet in South B.</p>
+      <span style="font-size:11px;color:var(--text-muted);margin-top:10px;display:block;">Feb 2026 · 4 min read</span>
+    </div>
+    <div style="background:var(--white);border-radius:var(--radius-lg);padding:24px;border:1px solid rgba(0,0,0,0.06);">
+      <span style="font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--gold);text-transform:uppercase;">🤝 Collab — April 2026</span>
+      <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:17px;color:var(--green);margin:10px 0 8px;line-height:1.25;">@KamaziKitchen Takes Over Our Kitchen</h3>
+      <p style="font-size:13px;color:var(--text-muted);line-height:1.5;">One night only. Nairobi's most-watched food creator, our kitchen, your taste buds. WhatsApp us for tickets.</p>
+      <a href="https://wa.me/254710738012?text=I'm%20interested%20in%20the%20creator%20collab%20event!" target="_blank" style="font-size:13px;color:var(--gold);font-weight:600;text-decoration:none;margin-top:10px;display:block;">Join Waitlist →</a>
+    </div>
+    <div style="background:var(--white);border-radius:var(--radius-lg);padding:24px;border:1px solid rgba(0,0,0,0.06);">
+      <span style="font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--gold);text-transform:uppercase;">☀️ Lifestyle</span>
+      <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:17px;color:var(--green);margin:10px 0 8px;line-height:1.25;">The Perfect Saturday in South B: A Food-First Guide</h3>
+      <p style="font-size:13px;color:var(--text-muted);line-height:1.5;">Start with uji power, end with a Mad Ting cocktail. The ultimate South B day itinerary for foodies.</p>
+      <span style="font-size:11px;color:var(--text-muted);margin-top:10px;display:block;">Jan 2026 · 5 min read</span>
     </div>
   </div>
 </section>
 
-<!-- EDITORIAL -->
-<section id="editorial">
-  <div class="rasta-side"></div>
-  <div class="section-header reveal">
-    <div>
-      <div class="section-eyebrow" style="color:var(--yellow)">Recipes · Lifestyle · Travel · Reviews</div>
-      <div class="section-title" style="color:#fff">THE <span class="yel">EDITORIAL</span></div>
-    </div>
-  </div>
-
-  <!-- Recipe of the Week -->
-  <div class="recipe-week reveal">
-    <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=600&q=85" alt="Recipe of the Week" loading="lazy">
-    <div class="recipe-week-content">
-      <div style="font-size:.68rem;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:var(--red);margin-bottom:.4rem;">🍳 Recipe of the Week</div>
-      <h3>Supu ya Ndizi with Smoky Wings</h3>
-      <p>This week we're blending Kenyan coastal flavours with our famous smoky chicken wings. A rich banana soup base meets crispy fried chicken in a combination that will change how you eat forever.</p>
-      <a href="#" class="btn-main" style="background:var(--red);color:#fff;font-size:.78rem;padding:.7rem 1.5rem;">Read Recipe →</a>
-    </div>
-  </div>
-
-  <!-- Monthly Collab -->
-  <div class="collab-strip reveal">
-    <div>
-      <h3>🤝 Monthly Creator Collab — April 2026</h3>
-      <p>This month we're partnering with <strong>@KamaziKitchen</strong> — Nairobi's most-watched food content creator. She's taking over our kitchen for a one-night exclusive tasting menu. Stay tuned on our WhatsApp for tickets.</p>
-    </div>
-    <a href="https://wa.me/254710738012?text=I'm%20interested%20in%20the%20creator%20collab%20event!" class="btn-main" style="background:var(--yellow);color:var(--black);white-space:nowrap;">Join Waitlist →</a>
-  </div>
-
-  <!-- Editorial Grid -->
-  <div class="editorial-grid" style="margin-top:2rem;">
-    <div class="editorial-featured reveal">
-      <img src="https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=800&q=85" alt="Editorial" loading="lazy">
-      <div class="editorial-featured-body">
-        <span class="editorial-badge badge-travel">✈️ Travel</span>
-        <div class="editorial-featured-title">Eating Through the Coast: A Mombasa Food Diary</div>
-        <div class="editorial-featured-excerpt">From pilau stalls in Old Town to fresh octopus at Tamarind, we document the most delicious weekend road trip you can take from Nairobi. Spoiler: you will gain 3kg and have zero regrets.</div>
-        <a href="#" class="btn-main" style="background:var(--green);color:#fff;font-size:.78rem;padding:.7rem 1.5rem;">Read Story →</a>
+<!-- MAP + FIND US -->
+<section style="background:var(--cream);padding:60px 24px;">
+  <div style="max-width:1000px;margin:0 auto;">
+    <p class="section-label">Find Us</p>
+    <h2 class="section-title" style="margin-bottom:28px;">Come Through</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;" class="find-us-grid">
+      <div style="background:var(--green);border-radius:var(--radius-lg);padding:32px;color:var(--cream);">
+        <div style="margin-bottom:20px;">
+          <div style="font-size:24px;margin-bottom:6px;">📍</div>
+          <h4 style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px;color:var(--gold);margin-bottom:4px;">Address</h4>
+          <p style="font-size:14px;color:rgba(245,240,232,0.8);line-height:1.5;">Meridian Court, South B<br>Nairobi, Kenya</p>
+        </div>
+        <div style="margin-bottom:20px;">
+          <div style="font-size:24px;margin-bottom:6px;">🕐</div>
+          <h4 style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px;color:var(--gold);margin-bottom:4px;">Hours</h4>
+          <p style="font-size:14px;color:rgba(245,240,232,0.8);">Open 24 Hours, 7 Days a Week</p>
+        </div>
+        <div style="margin-bottom:24px;">
+          <div style="font-size:24px;margin-bottom:6px;">💳</div>
+          <h4 style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px;color:var(--gold);margin-bottom:4px;">Payment</h4>
+          <p style="font-size:14px;color:rgba(245,240,232,0.8);">Cash & M-Pesa accepted</p>
+        </div>
+        <a href="https://wa.me/254710738012?text=Hi%20Ras%20Bites!%20I'd%20like%20to%20order%20🍔" class="btn-primary" target="_blank" style="display:inline-flex;align-items:center;gap:8px;">Order on WhatsApp →</a>
       </div>
-    </div>
-
-    <div class="editorial-card reveal">
-      <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=500&q=80" alt="Editorial" loading="lazy">
-      <div class="editorial-card-body">
-        <span class="editorial-badge badge-review">⭐ Restaurant Review</span>
-        <div class="editorial-card-title">Best Places to Buy Fresh Groceries & Ingredients in Nairobi</div>
-        <div class="editorial-card-excerpt">From Wakulima Market to Zucchini, we rank the best spots to source quality produce in the city.</div>
-        <div class="editorial-card-meta"><span>Mar 2026</span><span>6 min read</span></div>
-      </div>
-    </div>
-
-    <div class="editorial-card reveal">
-      <img src="https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=500&q=80" alt="Editorial" loading="lazy">
-      <div class="editorial-card-body">
-        <span class="editorial-badge badge-recipe">🍴 Recipe</span>
-        <div class="editorial-card-title">How to Make Our Ngwacii Cinnamon Fries at Home</div>
-        <div class="editorial-card-excerpt">Sweet potato, cinnamon sugar, and a touch of chilli. The recipe that broke the internet in South B.</div>
-        <div class="editorial-card-meta"><span>Feb 2026</span><span>4 min read</span></div>
-      </div>
-    </div>
-
-    <div class="editorial-card reveal">
-      <img src="https://images.unsplash.com/photo-1514190051997-0f6f39ca5cde?w=500&q=80" alt="Editorial" loading="lazy">
-      <div class="editorial-card-body">
-        <span class="editorial-badge badge-collab">🌟 Collab</span>
-        <div class="editorial-card-title">March Collab Recap: A Night with Chef Wambua</div>
-        <div class="editorial-card-excerpt">Last month's pop-up was nothing short of magic. Here's what 60 guests said about the experience.</div>
-        <div class="editorial-card-meta"><span>Mar 2026</span><span>3 min read</span></div>
-      </div>
-    </div>
-
-    <div class="editorial-card reveal">
-      <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=500&q=80" alt="Editorial" loading="lazy">
-      <div class="editorial-card-body">
-        <span class="editorial-badge badge-lifestyle">☀️ Lifestyle</span>
-        <div class="editorial-card-title">The Perfect Saturday in South B: A Food-First Guide</div>
-        <div class="editorial-card-excerpt">Start with uji power, end with a Mad Ting cocktail. The ultimate South B day itinerary for foodies.</div>
-        <div class="editorial-card-meta"><span>Jan 2026</span><span>5 min read</span></div>
-      </div>
-    </div>
-
-    <div class="editorial-card reveal">
-      <img src="https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=500&q=80" alt="Editorial" loading="lazy">
-      <div class="editorial-card-body">
-        <span class="editorial-badge badge-review">⭐ Review</span>
-        <div class="editorial-card-title">Nairobi's Hidden Gem Restaurants Worth the Drive</div>
-        <div class="editorial-card-excerpt">We visited 8 under-the-radar restaurants across Nairobi and ranked them honestly. No paid placements.</div>
-        <div class="editorial-card-meta"><span>Apr 2026</span><span>7 min read</span></div>
+      <div style="border-radius:var(--radius-lg);overflow:hidden;min-height:280px;">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.8363!2d36.8286!3d-1.3062!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f10a5e0a6e4c7%3A0x6b4f6b4f6b4f6b4f!2sMeridian+Court%2C+South+B%2C+Nairobi!5e0!3m2!1sen!2ske!4v1680000000000"
+          width="100%" height="300" style="border:0;display:block;" allowfullscreen loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ORDER CTA -->
-<section id="order">
-  <div class="order-inner reveal">
-    <img class="order-logo" src="https://raw.githubusercontent.com/kamarumathenge-wq/rasbites/main/logo.jpg.png" onerror="this.style.display='none'" alt="Ras Bites">
-    <div class="order-title"><span class="r">HUNGRY</span><br><span class="y">RIGHT</span> <span class="g">NOW?</span></div>
-    <p class="order-sub">Send us a WhatsApp message with your order. Open 24/7 at Meridian Court, South B — no matter the hour, Ras Bites is ready.</p>
-    <a href="https://wa.me/254710738012?text=Hi%20Ras%20Bites!%20I'd%20like%20to%20place%20an%20order%20🍔" class="btn-whatsapp">
-      <svg class="wa-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      Order on WhatsApp
-    </a>
+
+<!-- ══ REVIEWS ══ -->
+<section id="reviews" style="background:var(--green);padding:80px 24px;">
+  <div style="max-width:1100px;margin:0 auto;">
+    <p class="section-label" style="color:var(--gold-light);">What People Say</p>
+    <h2 class="section-title" style="color:var(--cream);margin-bottom:12px;">South B Speaks</h2>
+    <p style="color:rgba(245,240,232,0.6);font-size:15px;margin-bottom:40px;">Real reviews from real regulars. No fake love here.</p>
+
+    <div class="reviews-grid">
+
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"The Ras Double Stack hits different at 2am. I don't know what's in that sauce but I'm not complaining. South B's best kept secret — except it's not a secret anymore."</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:#3d7a56;">BM</div>
+          <div>
+            <strong>Brian M.</strong>
+            <span>South B local · via WhatsApp</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card review-card--featured">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Ordered the Wing Night for Two combo for date night and we ended up ordering a second round of Loaded Fries. The cocktails are dangerously good — the Bad Ting is no joke."</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:#c9a84c;color:#1a3a2a;">AW</div>
+          <div>
+            <strong>Amina W.</strong>
+            <span>Regular · via Google</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Open at 3am when everywhere else is closed. The Wah Gwan Shawarma is genuinely massive and the fries masala is underrated. This place has never let me down once."</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:#2c5c3f;">KO</div>
+          <div>
+            <strong>Kevin O.</strong>
+            <span>Late night regular · via Instagram</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Ngwacii Cinnamon Fries are something else. Sweet, spicy, crispy — I've tried to describe them to people and I just can't. You have to try them. Also the Mellow cocktail is perfect."</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:#3d7a56;">FN</div>
+          <div>
+            <strong>Faith N.</strong>
+            <span>Food enthusiast · via WhatsApp</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"The Party Pack (20 wings + Loaded Fries x2) fed 5 of us at a house party. Everyone was impressed. Quick response on WhatsApp, hot food, zero issues. We'll be back."</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:#c9a84c;color:#1a3a2a;">DK</div>
+          <div>
+            <strong>Dennis K.</strong>
+            <span>First timer → Regular · via WhatsApp</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Honestly didn't expect the wines to be this well-curated for a South B spot. 4th Street paired perfectly with the BBQ Bacon Stack. Ras Bites is on another level."</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:#2c5c3f;">SM</div>
+          <div>
+            <strong>Sharon M.</strong>
+            <span>Wine lover · via Google</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="text-align:center;margin-top:40px;">
+      <a href="https://wa.me/254710738012?text=Hi!%20I'd%20love%20to%20leave%20a%20review%20for%20Ras%20Bites%20🍔" target="_blank" class="btn-secondary" style="display:inline-flex;align-items:center;gap:8px;">Leave Your Review →</a>
+    </div>
   </div>
+</section>
+
+<!-- ══ INSTAGRAM FEED ══ -->
+<section id="instagram" style="background:var(--cream);padding:80px 24px;">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:36px;">
+      <div>
+        <p class="section-label">Follow the Vibe</p>
+        <h2 class="section-title">@rasbites</h2>
+      </div>
+      <a href="https://instagram.com/rasbites" target="_blank" class="ig-follow-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        Follow on Instagram
+      </a>
+    </div>
+
+    <div class="ig-grid">
+      <!-- Each tile is a placeholder styled like an IG post with a real food photo -->
+      <a href="https://instagram.com/rasbites" target="_blank" class="ig-tile">
+        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80" alt="Burger post">
+        <div class="ig-overlay">
+          <span>❤️ 248</span><span>💬 31</span>
+        </div>
+      </a>
+      <a href="https://instagram.com/rasbites" target="_blank" class="ig-tile">
+        <img src="https://images.unsplash.com/photo-1562967914-608f82629710?w=400&q=80" alt="Wings post">
+        <div class="ig-overlay">
+          <span>❤️ 312</span><span>💬 44</span>
+        </div>
+      </a>
+      <a href="https://instagram.com/rasbites" target="_blank" class="ig-tile">
+        <img src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=400&q=80" alt="Cocktail post">
+        <div class="ig-overlay">
+          <span>❤️ 189</span><span>💬 22</span>
+        </div>
+      </a>
+      <a href="https://instagram.com/rasbites" target="_blank" class="ig-tile">
+        <img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=400&q=80" alt="Fries post">
+        <div class="ig-overlay">
+          <span>❤️ 401</span><span>💬 58</span>
+        </div>
+      </a>
+      <a href="https://instagram.com/rasbites" target="_blank" class="ig-tile">
+        <img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400&q=80" alt="Shawarma post">
+        <div class="ig-overlay">
+          <span>❤️ 276</span><span>💬 35</span>
+        </div>
+      </a>
+      <a href="https://instagram.com/rasbites" target="_blank" class="ig-tile">
+        <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=400&q=80" alt="Wine post">
+        <div class="ig-overlay">
+          <span>❤️ 334</span><span>💬 47</span>
+        </div>
+      </a>
+    </div>
+
+    <p style="text-align:center;margin-top:20px;font-size:13px;color:var(--text-muted);">Tag us <strong style="color:var(--green);">@rasbites</strong> on Instagram for a chance to be featured &amp; win a free combo 🎉</p>
+  </div>
+</section>
+
+<!-- ══ LOYALTY ══ -->
+<section id="loyalty" style="background:var(--white);padding:80px 24px;">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;" class="loyalty-grid">
+
+      <!-- Left: copy -->
+      <div>
+        <p class="section-label">Coming Soon</p>
+        <h2 class="section-title" style="margin-bottom:16px;">The Ras Bites<br><span style="color:var(--gold);">Loyalty Club</span></h2>
+        <p style="font-size:15px;color:var(--text-muted);line-height:1.7;margin-bottom:28px;">Every order earns you points. Points unlock free bites, cocktail upgrades, priority ordering and exclusive member deals. Join the waitlist now — founding members get double points for life.</p>
+
+        <div class="loyalty-perks">
+          <div class="loyalty-perk">
+            <div class="perk-icon">🍔</div>
+            <div>
+              <strong>Earn on every order</strong>
+              <span>10 points per KSh 100 spent</span>
+            </div>
+          </div>
+          <div class="loyalty-perk">
+            <div class="perk-icon">🎁</div>
+            <div>
+              <strong>Redeem for free food</strong>
+              <span>Wagwan Fries, wings, cocktails & more</span>
+            </div>
+          </div>
+          <div class="loyalty-perk">
+            <div class="perk-icon">⚡</div>
+            <div>
+              <strong>Priority ordering</strong>
+              <span>Skip the queue on busy nights</span>
+            </div>
+          </div>
+          <div class="loyalty-perk">
+            <div class="perk-icon">🥂</div>
+            <div>
+              <strong>Members-only deals</strong>
+              <span>Exclusive combos, early access & surprises</span>
+            </div>
+          </div>
+        </div>
+
+        <a href="https://wa.me/254710738012?text=Hi!%20I'd%20like%20to%20join%20the%20Ras%20Bites%20Loyalty%20Club%20waitlist%20🎉" target="_blank" class="btn-primary" style="margin-top:28px;display:inline-flex;">
+          Join the Waitlist →
+        </a>
+      </div>
+
+      <!-- Right: card mockup -->
+      <div style="display:flex;justify-content:center;">
+        <div class="loyalty-card">
+          <div class="loyalty-card-top">
+            <img src="https://raw.githubusercontent.com/kamarumathenge-wq/rasbites/main/logo.jpg.png" alt="Ras Bites" onerror="this.style.display='none'" style="height:36px;width:36px;border-radius:50%;object-fit:cover;border:2px solid rgba(201,168,76,0.5);">
+            <div>
+              <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:var(--gold);">Ras Bites</div>
+              <div style="font-size:11px;color:rgba(245,240,232,0.6);letter-spacing:1px;">LOYALTY CLUB</div>
+            </div>
+          </div>
+          <div class="loyalty-card-member">
+            <span style="font-size:11px;color:rgba(245,240,232,0.5);letter-spacing:1px;">MEMBER</span>
+            <strong style="font-size:20px;color:var(--cream);font-family:'Syne',sans-serif;">Your Name Here</strong>
+          </div>
+          <div class="loyalty-card-points">
+            <div>
+              <span style="font-size:11px;color:rgba(245,240,232,0.5);display:block;letter-spacing:1px;">POINTS</span>
+              <strong style="font-size:36px;font-family:'Syne',sans-serif;color:var(--gold);line-height:1;">1,250</strong>
+            </div>
+            <div style="text-align:right;">
+              <span style="font-size:11px;color:rgba(245,240,232,0.5);display:block;letter-spacing:1px;">TIER</span>
+              <strong style="font-size:18px;font-family:'Syne',sans-serif;color:var(--gold-light);">Gold</strong>
+            </div>
+          </div>
+          <div class="loyalty-card-bar">
+            <div style="font-size:11px;color:rgba(245,240,232,0.5);margin-bottom:6px;">250 points to Platinum</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:4px;height:6px;">
+              <div style="background:var(--gold);width:83%;height:100%;border-radius:4px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="order">
+  <h2>Hungry<br><span>Right Now?</span></h2>
+  <p>Send us a WhatsApp message with your order. Open 24/7 at Meridian Court, South B.</p>
+  <a href="https://wa.me/254710738012?text=Hi%20Ras%20Bites!%20I'd%20like%20to%20place%20an%20order%20🍔" class="btn-primary" target="_blank">Order on WhatsApp →</a>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <img src="https://raw.githubusercontent.com/kamarumathenge-wq/rasbites/main/logo.jpg.png" onerror="this.style.display='none'" class="footer-logo" alt="Ras Bites">
-  <p>📍 Meridian Court, South B, Nairobi · Open 24/7</p>
-  <p>© 2026 Ras Bites & Wines</p>
+  <div style="max-width:1100px;margin:0 auto;width:100%;">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px;margin-bottom:40px;" class="footer-grid">
+      <div>
+        <div class="footer-logo" style="margin-bottom:12px;">
+          <img src="https://raw.githubusercontent.com/kamarumathenge-wq/rasbites/main/logo.jpg.png" alt="Ras Bites" onerror="this.style.display='none'">
+          <span>Ras Bites & Wines</span>
+        </div>
+        <p style="font-size:13px;color:rgba(245,240,232,0.5);line-height:1.6;">Fast food and fine wines, done right. Meridian Court, South B, Nairobi.</p>
+      </div>
+      <div>
+        <h4 style="font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--gold);margin-bottom:14px;letter-spacing:0.5px;">Quick Links</h4>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <a href="#menu" style="font-size:13px;color:rgba(245,240,232,0.6);text-decoration:none;">Menu</a>
+          <a href="#stories" style="font-size:13px;color:rgba(245,240,232,0.6);text-decoration:none;">Stories</a>
+          <a href="#reviews" style="font-size:13px;color:rgba(245,240,232,0.6);text-decoration:none;">Reviews</a>
+          <a href="#loyalty" style="font-size:13px;color:rgba(245,240,232,0.6);text-decoration:none;">Loyalty Club</a>
+          <a href="#order" style="font-size:13px;color:rgba(245,240,232,0.6);text-decoration:none;">Order Now</a>
+        </div>
+      </div>
+      <div>
+        <h4 style="font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--gold);margin-bottom:14px;letter-spacing:0.5px;">Find Us</h4>
+        <p style="font-size:13px;color:rgba(245,240,232,0.6);line-height:1.7;">📍 Meridian Court, South B<br>🕐 Open 24/7<br>💳 Cash & M-Pesa<br>📱 <a href="https://wa.me/254710738012" target="_blank" style="color:var(--gold);text-decoration:none;">+254 710 738 012</a></p>
+        <div style="display:flex;gap:12px;margin-top:16px;">
+          <a href="https://instagram.com/rasbites" target="_blank" style="width:34px;height:34px;background:rgba(255,255,255,0.08);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--cream);text-decoration:none;font-size:16px;" title="Instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://wa.me/254710738012" target="_blank" style="width:34px;height:34px;background:#25D366;border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;text-decoration:none;" title="WhatsApp">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+      <p style="font-size:12px;color:rgba(245,240,232,0.3);">© 2026 Ras Bites & Wines. All rights reserved.</p>
+      <p style="font-size:12px;color:rgba(245,240,232,0.3);">Made with ❤️ in South B, Nairobi</p>
+    </div>
+  </div>
 </footer>
 
-<!-- ===================== MODALS ===================== -->
-
-<!-- BURGERS MODAL -->
-<div class="modal-overlay" id="modal-burgers">
-  <div class="modal">
+<!-- ══ MODALS ══ -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOnBg(event)">
+  <div class="modal" id="modalBox">
+    <div class="modal-handle"></div>
     <div class="modal-header">
-      <div><div class="modal-title">Signature Burgers</div><div class="modal-subtitle">All burgers served with a side of fries & special sauce</div></div>
-      <button class="modal-close" onclick="closeModal('burgers')">×</button>
+      <button class="modal-close" onclick="closeModal()">×</button>
+      <h2 id="modalTitle"></h2>
+      <div class="modal-note" id="modalNote"></div>
     </div>
-    <div class="modal-body">
-      <div class="modal-note">🍟 Every burger comes with crispy fries + our secret Ras Bites special sauce</div>
-      <div class="modal-grid">
-        <div class="modal-card">
-          <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80" alt="Classic Smash Burger" loading="lazy">
-          <div class="modal-card-body">
-            <div class="modal-card-name">The Classic Smash</div>
-            <div class="modal-card-desc">Double smash beef patty, American cheese, pickles, caramelised onions & Ras sauce on a brioche bun.</div>
-            <div><span class="modal-card-price">KSh 600</span><span class="modal-card-tag">Best Seller</span></div>
-          </div>
-        </div>
-        <div class="modal-card">
-          <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=400&q=80" alt="BBQ Bacon Burger" loading="lazy">
-          <div class="modal-card-body">
-            <div class="modal-card-name">BBQ Bacon Stack</div>
-            <div class="modal-card-desc">Flame-grilled beef, crispy bacon, cheddar, smoky BBQ sauce, lettuce & tomato.</div>
-            <div><span class="modal-card-price">KSh 850</span></div>
-          </div>
-        </div>
-        <div class="modal-card">
-          <img src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=400&q=80" alt="Chicken Burger" loading="lazy">
-          <div class="modal-card-body">
-            <div class="modal-card-name">Crispy Chicken Burger</div>
-            <div class="modal-card-desc">Fried chicken thigh, coleslaw, jalapeños, honey mustard & pickles on a toasted sesame bun.</div>
-            <div><span class="modal-card-price">KSh 750</span><span class="modal-card-tag">Popular</span></div>
-          </div>
-        </div>
-        <div class="modal-card">
-          <img src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=400&q=80" alt="Double Stack" loading="lazy">
-          <div class="modal-card-body">
-            <div class="modal-card-name">The Ras Double Stack</div>
-            <div class="modal-card-desc">Two beef patties, double cheese, sautéed mushrooms, bacon & truffle mayo. Our signature beast.</div>
-            <div><span class="modal-card-price">KSh 1,200</span><span class="modal-card-tag">🔥 Hot</span></div>
-          </div>
-        </div>
-        <div class="modal-card">
-          <img src="https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=400&q=80" alt="Veggie Burger" loading="lazy">
-          <div class="modal-card-body">
-            <div class="modal-card-name">Veggie Garden Burger</div>
-            <div class="modal-card-desc">Black bean & sweet potato patty, avocado, roasted peppers, hummus & sriracha.</div>
-            <div><span class="modal-card-price">KSh 650</span><span class="modal-card-tag">Veggie</span></div>
-          </div>
-        </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- ══ CART DRAWER ══ -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCartOnBg(event)">
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-head">
+      <h2>🛒 Your Order</h2>
+      <button class="cart-close" onclick="toggleCart()">×</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty">
+        <span class="cart-empty-icon">🛒</span>
+        Your cart is empty.<br>Pick something delicious!
       </div>
+    </div>
+    <div class="cart-foot" id="cartFoot" style="display:none;">
+      <div class="cart-subtotal">
+        <span>Total</span>
+        <strong id="cartTotal">KSh 0</strong>
+      </div>
+      <a href="#" class="cart-wa-btn" id="cartWaBtn" target="_blank">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        Send Order via WhatsApp
+      </a>
+      <button class="cart-clear" onclick="clearCart()">Clear cart</button>
     </div>
   </div>
 </div>
 
-<!-- FRIES MODAL -->
-<div class="modal-overlay" id="modal-fries">
-  <div class="modal">
-    <div class="modal-header">
-      <div><div class="modal-title">Crispy Fries & Sides</div><div class="modal-subtitle">Six legendary fries options — pick your vibe</div></div>
-      <button class="modal-close" onclick="closeModal('fries')">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="modal-grid">
-        <div class="modal-card">
-          <img src="https://images.unsplash.com/photo-1630431341973-02e1b662ec35?w=400&q=80" alt="Wagwan Fries" loading="lazy">
-          <div class="modal-card-body">
-            <div class="modal-card-name">Wagwan Fries</div>
-            <div class="modal-card-desc">Classic golden crispy fries, salted to perfection. The original. No gimmicks.</div>
-            <div><span class="modal-card-price">KSh 200</span></div>
-          </div>
-        </div>
-        <div class="modal-card">
-          <img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=400&q=80" alt="Loaded Fries" loading="lazy">
-          <div class="modal-card-body">
-            <div class="modal-card-name">Loaded Fries</div>
-            <div class="modal-card-desc">Fries piled with cheddar sauce, jalapeños, sour cream, bacon bits & spring onions.</div>
-            <div><span class="modal-card-price">KSh 500</span><span class="modal-card-tag">🔥 Must Try</span></div>
-          </div>
-        </div>
-        <div class="modal-card">
-          <img src="https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?w=400&q=80" alt="Potato Wedges" loading="lazy">
-          <div class="modal-card-body">
-            <div class="modal-card-name">Potato Wedges</div>
-            <div class="modal-card-desc">Thick-cut seasoned wedges, oven-roasted with rosemary, garlic & paprika. Served with dip.</div>
-            <div><span class="modal-card-price">KSh 300</span></div>
-          </div>
-        </div>
-        <div class="modal-card">
-          <img src="https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=400&q=80" alt="Ngwacii Cinnamon Fries" loading="lazy">
-          <div class="modal-card-body">
-            <div class="modal-card-name">Ngwacii Cinnamon Fries</div>
-            <div class="modal-card-desc">Sweet potato fries tossed in cinnamon sugar & a touch of chilli. Unique, bold, addictive.</div>
-            <div><span class="modal-card-price">KSh 400</span><span class="modal-card-tag">Unique</span></div>
-          </div>
-        </div>
-        <div class="modal-card">
-          <img src="https://images.unsplash.com/photo-1599490659213-e2b9527bd087?w=400&q=80" alt="Spicy Fries" loading="lazy">
-          <div class="modal-card-body">
-            <div class="modal-card-name">Spicy Fries</div>
-            <div class="modal-card-desc">Crispy fries tossed in our house spice blend — cayenne, paprika, black pepper & garlic.</div>
-            <div><span class="modal-card-price">KSh 300</span><span class="modal-card-tag">🌶️ Hot</span></div>
-          </div>
-        </div>
-        <div class="modal-card">
-          <img src="https://images.unsplash.com/photo-1634375879834-14e40c000da3?w=400&q=80" alt="Fries Masala" loading="lazy">
-          <div class="modal-card-body">
-            <div class="modal-card-name">Fries Masala</div>
-            <div class="modal-card-desc">Nairobi street-style masala fries with tangy tamarind sauce, onions & fresh coriander.</div>
-            <div><span class="modal-card-price">KSh 350</span><span class="modal-card-tag">Nairobi Vibes</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
+<!-- STICKY CART BAR -->
+<div class="sticky-cart" id="stickyCart">
+  <div class="sticky-cart-info">
+    <span id="stickyCount">0 items</span>
+    <strong id="stickyTotal">KSh 0</strong>
   </div>
+  <button class="sticky-cart-btn" onclick="toggleCart()">
+    View Cart 🛒
+  </button>
 </div>
 
-<!-- SHAWARMA MODAL -->
-<div class="modal-overlay" id="modal-shawarma">
-  <div class="modal">
-    <div class="modal-header">
-      <div><div class="modal-title">Wraps & Shawarmas</div><div class="modal-subtitle">All shawarmas served with fries & special sauce</div></div>
-      <button class="modal-close" onclick="closeModal('shawarma')">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="modal-note">🍟 All shawarmas include a side of fries + our Ras special sauce</div>
-      <div class="modal-grid">
-        <div class="modal-card">
-          <img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400&q=80" alt="Ire Shawarma" loading="lazy">
-          <div class="modal-card-body">
-            <div class="modal-card-name">Ire Shawarma</div>
-            <div class="modal-card-desc">The classic. Grilled chicken or beef, fresh veg, garlic sauce & pickles in a warm flatbread. Normal size.</div>
-            <div><span class="modal-card-price">KSh 250</span><span class="modal-card-tag">Normal</span></div>
-          </div>
-        </div>
-        <div class="modal-card">
-          <img src="https://images.unsplash.com/photo-1701580257855-d89f19dd4c73?w=400&q=80" alt="Gwan Shawarma" loading="lazy">
-          <div class="modal-card-body">
-            <div class="modal-card-name">Gwan Shawarma</div>
-            <div class="modal-card-desc">More meat, more fillings, extra sauce. A proper meal in a wrap. The large size upgrade.</div>
-            <div><span class="modal-card-price">KSh 500</span><span class="modal-card-tag">Large</span></div>
-          </div>
-        </div>
-        <div class="modal-card">
-          <img src="https://images.unsplash.com/photo-1559847844-5315695dadae?w=400&q=80" alt="Wah Gwan Shawarma" loading="lazy">
-          <div class="modal-card-body">
-            <div class="modal-card-name">Wah Gwan Shawarma</div>
-            <div class="modal-card-desc">The boss move. Double-stuffed, extra meat, loaded toppings. The ultimate South B shawarma experience.</div>
-            <div><span class="modal-card-price">KSh 800</span><span class="modal-card-tag">🔥 XL</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- CHICKEN MODAL -->
-<div class="modal-overlay" id="modal-chicken">
-  <div class="modal">
-    <div class="modal-header">
-      <div><div class="modal-title">Chicken Wings</div><div class="modal-subtitle">Choose your size & heat level — all served with dipping sauce</div></div>
-      <button class="modal-close" onclick="closeModal('chicken')">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="modal-note">🌶️ All wing orders come with your choice of dipping sauce: Ranch, Blue Cheese, or Ras Special</div>
-      <div class="modal-grid">
-        <div class="modal-card">
-          <img src="https://images.unsplash.com/photo-1562967914-608f82629710?w=400&q=80" alt="6 Wings" loading="lazy">
-          <div class="modal-card-body">
-            <div class="modal-card-name">6 Pieces</div>
-            <div class="modal-card-desc">Perfect starter or snack. Six golden fried wings. Choose your heat:</div>
-            <div class="spice-opts"><span class="spice-opt normal">Normal</span><span class="spice-opt spicy">Spicy</span><span class="spice-opt xspicy">Extra Spicy</span></div>
-            <div style="margin-top:.8rem;"><span class="modal-card-price">KSh 600</span></div>
-          </div>
-        </div>
-        <div class="modal-card">
-          <img src="https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=400&q=80" alt="10 Wings" loading="lazy">
-          <div class="modal-card-body">
-            <div class="modal-card-name">10 Pieces</div>
-            <div class="modal-card-desc">The solid meal. Ten perfectly seasoned wings. Great for sharing or solo feasting.</div>
-            <div class="spice-opts"><span class="spice-opt normal">Normal</span><span class="spice-opt spicy">Spicy</span><span class="spice-opt xspicy">Extra Spicy</span></div>
-            <div style="margin-top:.8rem;"><span class="modal-card-price">KSh 1,000</span><span class="modal-card-tag">Popular</span></div>
-          </div>
-        </div>
-        <div class="modal-card">
-          <img src="https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=400&q=80" alt="20 Wings" loading="lazy">
-          <div class="modal-card-body">
-            <div class="modal-card-name">Jumbo 20 Pieces</div>
-            <div class="modal-card-desc">The party pack. Twenty wings, two dipping sauces. Feed the squad or go beast mode solo.</div>
-            <div class="spice-opts"><span class="spice-opt normal">Normal</span><span class="spice-opt spicy">Spicy</span><span class="spice-opt xspicy">Extra Spicy</span></div>
-            <div style="margin-top:.8rem;"><span class="modal-card-price">KSh 1,500</span><span class="modal-card-tag">🎉 Party</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- DRINKS MODAL -->
-<div class="modal-overlay" id="modal-drinks">
-  <div class="modal">
-    <div class="modal-header">
-      <div><div class="modal-title">Drinks & Wines</div><div class="modal-subtitle">Alcoholic · Non-Alcoholic · Bottles · Cocktails</div></div>
-      <button class="modal-close" onclick="closeModal('drinks')">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="modal-tabs">
-        <button class="modal-tab active" onclick="switchTab('drinks','cocktails')">🍹 Signature Cocktails</button>
-        <button class="modal-tab" onclick="switchTab('drinks','popular')">🥂 Popular Cocktails</button>
-        <button class="modal-tab" onclick="switchTab('drinks','bottles')">🍾 Full Bottles</button>
-        <button class="modal-tab" onclick="switchTab('drinks','nonalc')">🥤 Non-Alcoholic</button>
-      </div>
-
-      <div class="modal-tab-pane active" id="drinks-cocktails">
-        <div class="modal-note">🍹 Our signature cocktails — crafted exclusively at Ras Bites</div>
-        <div class="modal-grid">
-          <div class="modal-card">
-            <img src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=400&q=80" alt="Mad Ting" loading="lazy">
-            <div class="modal-card-body">
-              <div class="modal-card-name">Mad Ting</div>
-              <div class="modal-card-desc">Strong. Bold. Not for the faint-hearted. Triple spirit base with citrus & fire.</div>
-              <div><span class="modal-card-price">KSh 700</span><span class="modal-card-tag">Strong</span></div>
-            </div>
-          </div>
-          <div class="modal-card">
-            <img src="https://images.unsplash.com/photo-1609951651556-5334e2706168?w=400&q=80" alt="Mellow" loading="lazy">
-            <div class="modal-card-body">
-              <div class="modal-card-name">Mellow</div>
-              <div class="modal-card-desc">Smooth, fruity & easy. Perfect for chilling. Passion fruit, mint & light spirits.</div>
-              <div><span class="modal-card-price">KSh 500</span><span class="modal-card-tag">Smooth</span></div>
-            </div>
-          </div>
-          <div class="modal-card">
-            <img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=400&q=80" alt="Bad Ting" loading="lazy">
-            <div class="modal-card-body">
-              <div class="modal-card-name">Bad Ting</div>
-              <div class="modal-card-desc">The premium hit. Four spirits, secret bitters & a smoke finish. Only for the serious.</div>
-              <div><span class="modal-card-price">KSh 1,000</span><span class="modal-card-tag">🔥 Premium</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="modal-tab-pane" id="drinks-popular">
-        <div class="modal-note">🥂 Popular cocktails loved by Nairobians</div>
-        <div class="modal-grid">
-          <div class="modal-card">
-            <img src="https://images.unsplash.com/photo-1571950006418-f98a7fc3fafd?w=400&q=80" alt="Dawa" loading="lazy">
-            <div class="modal-card-body"><div class="modal-card-name">Dawa</div><div class="modal-card-desc">Kenya's classic. Vodka, honey, lime & brown sugar. The original "medicine."</div><div><span class="modal-card-price">KSh 600</span><span class="modal-card-tag">Kenyan Classic</span></div></div>
-          </div>
-          <div class="modal-card">
-            <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&q=80" alt="Mojito" loading="lazy">
-            <div class="modal-card-body"><div class="modal-card-name">Mojito</div><div class="modal-card-desc">White rum, fresh mint, lime, sugar & soda. Refreshing, classic, never disappoints.</div><div><span class="modal-card-price">KSh 650</span></div></div>
-          </div>
-          <div class="modal-card">
-            <img src="https://images.unsplash.com/photo-1582196016295-f8c8bd4b3a99?w=400&q=80" alt="Margarita" loading="lazy">
-            <div class="modal-card-body"><div class="modal-card-name">Margarita</div><div class="modal-card-desc">Tequila, Cointreau, lime juice & agave. Available in strawberry or classic.</div><div><span class="modal-card-price">KSh 700</span></div></div>
-          </div>
-          <div class="modal-card">
-            <img src="https://images.unsplash.com/photo-1574701148212-8518049c7b2a?w=400&q=80" alt="Espresso Martini" loading="lazy">
-            <div class="modal-card-body"><div class="modal-card-name">Espresso Martini</div><div class="modal-card-desc">Vodka, espresso & coffee liqueur. The night-starter you need.</div><div><span class="modal-card-price">KSh 750</span><span class="modal-card-tag">Fan Fave</span></div></div>
-          </div>
-          <div class="modal-card">
-            <img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=400&q=80" alt="Gin & Tonic" loading="lazy">
-            <div class="modal-card-body"><div class="modal-card-name">Gin & Tonic</div><div class="modal-card-desc">Premium gin, tonic water, cucumber & lime. Clean, crisp & always classy.</div><div><span class="modal-card-price">KSh 600</span></div></div>
-          </div>
-          <div class="modal-card">
-            <img src="https://images.unsplash.com/photo-1527761939622-933c972a4b8c?w=400&q=80" alt="Tusker Beer" loading="lazy">
-            <div class="modal-card-body"><div class="modal-card-name">Tusker / White Cap / Guinness</div><div class="modal-card-desc">Cold Kenyan beers. Nothing more needs to be said.</div><div><span class="modal-card-price">KSh 300 – 400</span><span class="modal-card-tag">Local Legend</span></div></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="modal-tab-pane" id="drinks-bottles">
-        <div class="modal-note">🍾 Full bottles — great for groups & celebrations. M-Pesa accepted.</div>
-        <div class="modal-grid">
-          <div class="modal-card">
-            <img src="https://images.unsplash.com/photo-1527281400683-1aae777175f8?w=400&q=80" alt="Johnnie Walker" loading="lazy">
-            <div class="modal-card-body"><div class="modal-card-name">Johnnie Walker Black</div><div class="modal-card-desc">750ml · Blended Scotch Whisky · Kenya's most loved whisky.</div><div><span class="modal-card-price">KSh 3,500</span></div></div>
-          </div>
-          <div class="modal-card">
-            <img src="https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=400&q=80" alt="Jack Daniels" loading="lazy">
-            <div class="modal-card-body"><div class="modal-card-name">Jack Daniel's</div><div class="modal-card-desc">750ml · Tennessee Whiskey · Old No. 7. The classic American.</div><div><span class="modal-card-price">KSh 3,200</span></div></div>
-          </div>
-          <div class="modal-card">
-            <img src="https://images.unsplash.com/photo-1504198453319-5ce911bafcde?w=400&q=80" alt="Smirnoff Vodka" loading="lazy">
-            <div class="modal-card-body"><div class="modal-card-name">Smirnoff Vodka</div><div class="modal-card-desc">750ml · Triple-distilled vodka. Goes with everything.</div><div><span class="modal-card-price">KSh 1,800</span></div></div>
-          </div>
-          <div class="modal-card">
-            <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=400&q=80" alt="Red Wine" loading="lazy">
-            <div class="modal-card-body"><div class="modal-card-name">4th Street Red Wine</div><div class="modal-card-desc">750ml · South African red blend. Kenya's favourite table wine.</div><div><span class="modal-card-price">KSh 850</span><span class="modal-card-tag">Popular</span></div></div>
-          </div>
-          <div class="modal-card">
-            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80" alt="Baileys" loading="lazy">
-            <div class="modal-card-body"><div class="modal-card-name">Baileys Irish Cream</div><div class="modal-card-desc">750ml · Cream liqueur. Smooth, indulgent & perfect over ice.</div><div><span class="modal-card-price">KSh 2,800</span></div></div>
-          </div>
-          <div class="modal-card">
-            <img src="https://images.unsplash.com/photo-1609951651556-5334e2706168?w=400&q=80" alt="Amarula" loading="lazy">
-            <div class="modal-card-body"><div class="modal-card-name">Amarula</div><div class="modal-card-desc">750ml · African cream liqueur from the marula fruit. Uniquely Kenyan shelf.</div><div><span class="modal-card-price">KSh 2,200</span><span class="modal-card-tag">African</span></div></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="modal-tab-pane" id="drinks-nonalc">
-        <div class="modal-note">🥤 All non-alcoholic drinks — great for everyone</div>
-        <div class="modal-section-title">Sodas</div>
-        <div class="modal-grid">
-          <div class="modal-card">
-            <img src="https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=400&q=80" alt="Soda" loading="lazy">
-            <div class="modal-card-body"><div class="modal-card-name">Soda (Coke/Fanta/Sprite)</div><div class="modal-card-desc">Choose your favourite. Cold and refreshing.</div><div><span class="modal-card-price">KSh 80 / 120 / 180</span><span class="modal-card-tag">500ml / 1L / 2L</span></div></div>
-          </div>
-          <div class="modal-card">
-            <img src="https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=400&q=80" alt="Juice" loading="lazy">
-            <div class="modal-card-body"><div class="modal-card-name">Fresh Fruit Juices</div><div class="modal-card-desc">Passion, mango, pineapple, watermelon & mixed fruit. Fresh daily.</div><div><span class="modal-card-price">KSh 150 – 250</span></div></div>
-          </div>
-          <div class="modal-card">
-            <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=400&q=80" alt="Tea" loading="lazy">
-            <div class="modal-card-body"><div class="modal-card-name">Tea & Coffee</div><div class="modal-card-desc">Kenyan tea, strong tea, Uji Power, black coffee, white coffee & Americano.</div><div><span class="modal-card-price">KSh 50 – 200</span></div></div>
-          </div>
-          <div class="modal-card">
-            <img src="https://images.unsplash.com/photo-1560023907-5f339617ea30?w=400&q=80" alt="Water" loading="lazy">
-            <div class="modal-card-body"><div class="modal-card-name">Water</div><div class="modal-card-desc">Still or sparkling. Always cold.</div><div><span class="modal-card-price">KSh 50 / 100</span><span class="modal-card-tag">500ml / 1L</span></div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- COMBOS MODAL -->
-<div class="modal-overlay" id="modal-combos">
-  <div class="modal">
-    <div class="modal-header">
-      <div><div class="modal-title">Combo Deals</div><div class="modal-subtitle">Best pairings from our menu — great value every time</div></div>
-      <button class="modal-close" onclick="closeModal('combos')">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="modal-grid">
-        <div class="modal-card">
-          <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&q=80" alt="Classic Combo" loading="lazy">
-          <div class="modal-card-body">
-            <div class="modal-card-name">The Classic Ras</div>
-            <div class="modal-card-desc">Classic Smash Burger + Wagwan Fries + Soda 500ml. The everyday go-to.</div>
-            <div><span class="modal-card-price">KSh 750</span><span class="modal-card-tag">Save KSh 130</span></div>
-          </div>
-        </div>
-        <div class="modal-card">
-          <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80" alt="BBQ Combo" loading="lazy">
-          <div class="modal-card-body">
-            <div class="modal-card-name">BBQ Stack Meal</div>
-            <div class="modal-card-desc">BBQ Bacon Stack + Spicy Fries + Tusker Beer. The Friday night special.</div>
-            <div><span class="modal-card-price">KSh 1,200</span><span class="modal-card-tag">Save KSh 250</span></div>
-          </div>
-        </div>
-        <div class="modal-card">
-          <img src="https://images.unsplash.com/photo-1562967914-608f82629710?w=400&q=80" alt="Wing Night" loading="lazy">
-          <div class="modal-card-body">
-            <div class="modal-card-name">Wing Night for Two</div>
-            <div class="modal-card-desc">10 Piece Wings + Loaded Fries + 2x Sodas. Perfect for date night.</div>
-            <div><span class="modal-card-price">KSh 1,500</span><span class="modal-card-tag">Save KSh 300</span></div>
-          </div>
-        </div>
-        <div class="modal-card">
-          <img src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=400&q=80" alt="Cocktail Meal" loading="lazy">
-          <div class="modal-card-body">
-            <div class="modal-card-name">Cocktail & Bites</div>
-            <div class="modal-card-desc">Gwan Shawarma + Ngwacii Fries + Mellow Cocktail. The ultimate vibe combo.</div>
-            <div><span class="modal-card-price">KSh 1,100</span><span class="modal-card-tag">🔥 Vibe</span></div>
-          </div>
-        </div>
-        <div class="modal-card">
-          <img src="https://images.unsplash.com/photo-1527761939622-933c972a4b8c?w=400&q=80" alt="Party Pack" loading="lazy">
-          <div class="modal-card-body">
-            <div class="modal-card-name">Party Pack</div>
-            <div class="modal-card-desc">Jumbo 20 Wings + 2x Loaded Fries + 4x Sodas. Feed the whole crew.</div>
-            <div><span class="modal-card-price">KSh 2,300</span><span class="modal-card-tag">🎉 Save KSh 500</span></div>
-          </div>
-        </div>
-        <div class="modal-card">
-          <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&q=80" alt="Premium Combo" loading="lazy">
-          <div class="modal-card-body">
-            <div class="modal-card-name">The Premium Ras Experience</div>
-            <div class="modal-card-desc">Ras Double Stack + Potato Wedges + Bad Ting Cocktail. Go big or go home.</div>
-            <div><span class="modal-card-price">KSh 2,500</span><span class="modal-card-tag">Premium</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
 
 <script>
-// Cursor
-const cursor=document.getElementById('cursor');
-const ring=document.getElementById('cursor-ring');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.transform=`translate(${mx-7}px,${my-7}px)`;});
-function animateRing(){rx+=(mx-rx-19)*.12;ry+=(my-ry-19)*.12;ring.style.transform=`translate(${rx}px,${ry}px)`;requestAnimationFrame(animateRing);}
-animateRing();
-document.querySelectorAll('a,button,.menu-card').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{ring.style.width='56px';ring.style.height='56px';ring.style.opacity='.5';});
-  el.addEventListener('mouseleave',()=>{ring.style.width='38px';ring.style.height='38px';ring.style.opacity='1';});
-});
+// ══ MENU DATA ══
+const menus = {
+  burgers: {
+    title: 'Signature Burgers',
+    note: '🍟 Every burger comes with crispy fries + our secret Ras Bites special sauce',
+    items: [
+      { id:'b1', name:'The Classic Smash', desc:'Double smash beef patty, American cheese, pickles, caramelised onions & Ras sauce on a brioche bun.', price:600, badge:'Best Seller', badgeClass:'badge-pop', img:'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80' },
+      { id:'b2', name:'BBQ Bacon Stack', desc:'Flame-grilled beef, crispy bacon, cheddar, smoky BBQ sauce, lettuce & tomato.', price:850, badge:'', img:'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=400&q=80' },
+      { id:'b3', name:'Crispy Chicken Burger', desc:'Fried chicken thigh, coleslaw, jalapeños, honey mustard & pickles on a toasted sesame bun.', price:750, badge:'Popular', badgeClass:'badge-pop', img:'https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=400&q=80' },
+      { id:'b4', name:'The Ras Double Stack', desc:'Two beef patties, double cheese, sautéed mushrooms, bacon & truffle mayo. Our signature beast.', price:1200, badge:'🔥 Hot', badgeClass:'badge-hot', img:'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=400&q=80' },
+      { id:'b5', name:'Veggie Garden Burger', desc:'Black bean & sweet potato patty, avocado, roasted peppers, hummus & sriracha.', price:650, badge:'Veggie', badgeClass:'badge-veg', img:'https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=400&q=80' },
+    ]
+  },
+  fries: {
+    title: 'Crispy Fries & Sides',
+    note: '🧂 Six legendary fries options — pick your vibe',
+    items: [
+      { id:'f1', name:'Wagwan Fries', desc:'Classic golden crispy fries, salted to perfection. The original. No gimmicks.', price:200, badge:'', img:'https://images.unsplash.com/photo-1630431341973-02e1b662ec35?w=400&q=80' },
+      { id:'f2', name:'Loaded Fries', desc:'Fries piled with cheddar sauce, jalapeños, sour cream, bacon bits & spring onions.', price:500, badge:'🔥 Must Try', badgeClass:'badge-hot', img:'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=400&q=80' },
+      { id:'f3', name:'Potato Wedges', desc:'Thick-cut seasoned wedges, oven-roasted with rosemary, garlic & paprika. Served with dip.', price:300, badge:'', img:'https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?w=400&q=80' },
+      { id:'f4', name:'Ngwacii Cinnamon Fries', desc:'Sweet potato fries tossed in cinnamon sugar & a touch of chilli. Unique, bold, addictive.', price:400, badge:'Unique', badgeClass:'badge-unique', img:'https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=400&q=80' },
+      { id:'f5', name:'Spicy Fries', desc:'Crispy fries tossed in our house spice blend — cayenne, paprika, black pepper & garlic.', price:300, badge:'🌶️ Hot', badgeClass:'badge-hot', img:'https://images.unsplash.com/photo-1599490659213-e2b9527bd087?w=400&q=80' },
+      { id:'f6', name:'Fries Masala', desc:'Nairobi street-style masala fries with tangy tamarind sauce, onions & fresh coriander.', price:350, badge:'Nairobi Vibes', badgeClass:'badge-unique', img:'https://images.unsplash.com/photo-1634375879834-14e40c000da3?w=400&q=80' },
+    ]
+  },
+  shawarmas: {
+    title: 'Wraps & Shawarmas',
+    note: '🍟 All shawarmas include a side of fries + our Ras special sauce',
+    items: [
+      { id:'s1', name:'Ire Shawarma', desc:'The classic. Grilled chicken or beef, fresh veg, garlic sauce & pickles in a warm flatbread. Normal size.', price:250, badge:'Normal', img:'https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400&q=80' },
+      { id:'s2', name:'Gwan Shawarma', desc:'More meat, more fillings, extra sauce. A proper meal in a wrap. The large size upgrade.', price:500, badge:'Large', img:'https://images.unsplash.com/photo-1701580257855-d89f19dd4c73?w=400&q=80' },
+      { id:'s3', name:'Wah Gwan Shawarma', desc:'The boss move. Double-stuffed, extra meat, loaded toppings. The ultimate South B shawarma experience.', price:800, badge:'🔥 XL', badgeClass:'badge-hot', img:'https://images.unsplash.com/photo-1559847844-5315695dadae?w=400&q=80' },
+    ]
+  },
+  wings: {
+    title: 'Chicken Wings',
+    note: '🌶️ All wing orders come with your choice of dipping sauce: Ranch, Blue Cheese, or Ras Special',
+    items: [
+      { id:'w1', name:'6 Pieces', desc:'Perfect starter or snack. Six golden fried wings.', price:600, badge:'', img:'https://images.unsplash.com/photo-1562967914-608f82629710?w=400&q=80', hasVariant:true },
+      { id:'w2', name:'10 Pieces', desc:'The solid meal. Ten perfectly seasoned wings. Great for sharing or solo feasting.', price:1000, badge:'Popular', badgeClass:'badge-pop', img:'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=400&q=80', hasVariant:true },
+      { id:'w3', name:'Jumbo 20 Pieces', desc:'The party pack. Twenty wings, two dipping sauces. Feed the squad or go beast mode solo.', price:1500, badge:'🎉 Party', badgeClass:'badge-unique', img:'https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=400&q=80', hasVariant:true },
+    ]
+  },
+  drinks: {
+    title: 'Drinks & Wines',
+    note: '🍹 Signature cocktails · 🥂 Cocktails · 🍾 Bottles · 🥤 Non-Alcoholic',
+    items: [
+      { id:'d1', name:'Mad Ting', desc:'Strong. Bold. Not for the faint-hearted. Triple spirit base with citrus & fire.', price:700, badge:'Strong', badgeClass:'badge-hot', img:'https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=400&q=80' },
+      { id:'d2', name:'Mellow', desc:'Smooth, fruity & easy. Perfect for chilling. Passion fruit, mint & light spirits.', price:500, badge:'Smooth', img:'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&q=80' },
+      { id:'d3', name:'Bad Ting', desc:"The premium hit. Four spirits, secret bitters & a smoke finish. Only for the serious.", price:1000, badge:'🔥 Premium', badgeClass:'badge-hot', img:'https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=400&q=80' },
+      { id:'d4', name:'Dawa', desc:"Kenya's classic. Vodka, honey, lime & brown sugar. The original 'medicine.'", price:600, badge:'Kenyan Classic', badgeClass:'badge-pop', img:'https://images.unsplash.com/photo-1571950006418-f98a7fc3fafd?w=400&q=80' },
+      { id:'d5', name:'Mojito', desc:'White rum, fresh mint, lime, sugar & soda. Refreshing, classic, never disappoints.', price:650, badge:'', img:'https://images.unsplash.com/photo-1609951651556-5334e2706168?w=400&q=80' },
+      { id:'d6', name:'Margarita', desc:'Tequila, Cointreau, lime juice & agave. Available in strawberry or classic.', price:700, badge:'', img:'https://images.unsplash.com/photo-1582196016295-f8c8bd4b3a99?w=400&q=80' },
+      { id:'d7', name:'Espresso Martini', desc:'Vodka, espresso & coffee liqueur. The night-starter you need.', price:750, badge:'Fan Fave', badgeClass:'badge-pop', img:'https://images.unsplash.com/photo-1574701148212-8518049c7b2a?w=400&q=80' },
+      { id:'d8', name:'Gin & Tonic', desc:'Premium gin, tonic water, cucumber & lime. Clean, crisp & always classy.', price:600, badge:'', img:'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=400&q=80' },
+      { id:'d9', name:'Tusker / White Cap / Guinness', desc:'Cold Kenyan beers. Nothing more needs to be said.', price:350, badge:'Local Legend', badgeClass:'badge-pop', img:'https://images.unsplash.com/photo-1527761939622-933c972a4b8c?w=400&q=80' },
+      { id:'d10', name:'4th Street Red Wine', desc:'750ml · South African red blend. Kenya\'s favourite table wine.', price:850, badge:'Popular', badgeClass:'badge-pop', img:'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=400&q=80' },
+      { id:'d11', name:'Johnnie Walker Black', desc:'750ml · Blended Scotch Whisky — Kenya\'s most loved whisky.', price:3500, badge:'', img:'https://images.unsplash.com/photo-1527281400683-1aae777175f8?w=400&q=80' },
+      { id:'d12', name:'Jack Daniel\'s', desc:'750ml · Tennessee Whiskey · Old No. 7. The classic American.', price:3200, badge:'', img:'https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=400&q=80' },
+      { id:'d13', name:'Smirnoff Vodka', desc:'750ml · Triple-distilled vodka. Goes with everything.', price:1800, badge:'', img:'https://images.unsplash.com/photo-1618885472179-5e474019f2a9?w=400&q=80' },
+      { id:'d14', name:'Baileys Irish Cream', desc:'750ml · Cream liqueur. Smooth, indulgent & perfect over ice.', price:2800, badge:'', img:'https://images.unsplash.com/photo-1547595628-c61a29f496f0?w=400&q=80' },
+      { id:'d15', name:'Amarula', desc:'750ml · African cream liqueur from the marula fruit. Uniquely Kenyan shelf.', price:2200, badge:'African', badgeClass:'badge-unique', img:'https://images.unsplash.com/photo-1582819508369-28a3f866a49b?w=400&q=80' },
+      { id:'d16', name:'Fresh Fruit Juices', desc:'Passion, mango, pineapple, watermelon & mixed fruit. Fresh daily.', price:200, badge:'', img:'https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=400&q=80' },
+      { id:'d17', name:'Soda (Coke/Fanta/Sprite)', desc:'Choose your favourite. Cold and refreshing.', price:80, badge:'', img:'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=400&q=80' },
+      { id:'d18', name:'Tea & Coffee', desc:'Kenyan tea, strong tea, Uji Power, black coffee, white coffee & Americano.', price:100, badge:'', img:'https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=400&q=80' },
+      { id:'d19', name:'Water', desc:'Still or sparkling. Always cold.', price:50, badge:'', img:'https://images.unsplash.com/photo-1560023907-5f339617ea30?w=400&q=80' },
+    ]
+  },
+  combos: {
+    title: 'Combo Deals',
+    note: '💰 Best value pairings — food + drinks together',
+    items: [
+      { id:'c1', name:'The Classic Ras', desc:'Classic Smash Burger + Wagwan Fries + Soda 500ml. The everyday go-to.', price:750, badge:'Save KSh 130', badgeClass:'badge-pop', img:'https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&q=80' },
+      { id:'c2', name:'BBQ Stack Meal', desc:'BBQ Bacon Stack + Spicy Fries + Tusker Beer. The Friday night special.', price:1200, badge:'Save KSh 250', badgeClass:'badge-pop', img:'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80' },
+      { id:'c3', name:'Wing Night for Two', desc:'10 Piece Wings + Loaded Fries + 2x Sodas. Perfect for date night.', price:1500, badge:'Save KSh 300', badgeClass:'badge-pop', img:'https://images.unsplash.com/photo-1562967914-608f82629710?w=400&q=80' },
+      { id:'c4', name:'Cocktail & Bites', desc:'Gwan Shawarma + Ngwacii Fries + Mellow Cocktail. The ultimate vibe combo.', price:1100, badge:'🔥 Vibe', badgeClass:'badge-hot', img:'https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=400&q=80' },
+      { id:'c5', name:'Party Pack', desc:'Jumbo 20 Wings + 2x Loaded Fries + 4x Sodas. Feed the whole crew.', price:2300, badge:'🎉 Save KSh 500', badgeClass:'badge-unique', img:'https://images.unsplash.com/photo-1527761939622-933c972a4b8c?w=400&q=80' },
+      { id:'c6', name:'The Premium Ras Experience', desc:'Ras Double Stack + Potato Wedges + Bad Ting Cocktail. Go big or go home.', price:2500, badge:'Premium', badgeClass:'badge-hot', img:'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&q=80' },
+    ]
+  }
+};
 
-// Modals
-function openModal(id){
-  document.getElementById('modal-'+id).classList.add('open');
-  document.body.style.overflow='hidden';
+// ══ CART STATE ══
+let cart = []; // [{id, name, price, qty, variant}]
+
+// ══ SELECTED VARIANTS (wings) ══
+let selectedVariants = {};
+
+// ══ MODAL ══
+function openModal(key) {
+  const menu = menus[key];
+  document.getElementById('modalTitle').textContent = menu.title;
+  document.getElementById('modalNote').innerHTML = menu.note;
+  document.getElementById('modalBody').innerHTML = menu.items.map(item => renderItem(item)).join('');
+  document.getElementById('modalOverlay').classList.add('open');
+  // reset variant selections for this open
+  selectedVariants = {};
 }
-function closeModal(id){
-  document.getElementById('modal-'+id).classList.remove('open');
-  document.body.style.overflow='';
+function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
+function closeModalOnBg(e) { if (e.target === document.getElementById('modalOverlay')) closeModal(); }
+
+function renderItem(item) {
+  const badge = item.badge ? `<span class="item-badge ${item.badgeClass || ''}">${item.badge}</span>` : '';
+  const variants = item.hasVariant ? `
+    <div class="variant-row">
+      ${['Normal','Spicy','Extra Spicy'].map(v => `<button class="variant-btn" data-item="${item.id}" data-variant="${v}" onclick="selectVariant('${item.id}','${v}',this)">${v}</button>`).join('')}
+    </div>` : '';
+  return `
+    <div class="item-card">
+      <img src="${item.img}" alt="${item.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&q=70';this.onerror=null;">
+      <div class="item-info">
+        <div class="item-name">${item.name}${badge}</div>
+        <div class="item-desc">${item.desc}</div>
+        ${variants}
+        <div class="item-bottom">
+          <span class="item-price">KSh ${item.price.toLocaleString()}</span>
+          <button class="add-btn" onclick="addToCart('${item.id}','${item.name}',${item.price},${!!item.hasVariant})" title="Add to order">+</button>
+        </div>
+      </div>
+    </div>`;
 }
-document.querySelectorAll('.modal-overlay').forEach(o=>{
-  o.addEventListener('click',e=>{if(e.target===o){const id=o.id.replace('modal-','');closeModal(id);}});
-});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.querySelectorAll('.modal-overlay.open').forEach(o=>{const id=o.id.replace('modal-','');closeModal(id);});}});
 
-// Tabs
-function switchTab(modal,tab){
-  const panes=document.querySelectorAll(`#modal-${modal} .modal-tab-pane`);
-  const tabs=document.querySelectorAll(`#modal-${modal} .modal-tab`);
-  panes.forEach(p=>p.classList.remove('active'));
-  tabs.forEach(t=>t.classList.remove('active'));
-  document.getElementById(`${modal}-${tab}`).classList.add('active');
-  event.target.classList.add('active');
+function selectVariant(itemId, variant, btn) {
+  selectedVariants[itemId] = variant;
+  document.querySelectorAll(`.variant-btn[data-item="${itemId}"]`).forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
 }
 
-// Scroll reveal
-const reveals=document.querySelectorAll('.reveal');
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*70);obs.unobserve(e.target);}});
-},{threshold:.08});
-reveals.forEach(el=>obs.observe(el));
-setTimeout(()=>{document.querySelectorAll(".hero .reveal,.reveal").forEach(el=>el.classList.add("visible"));},10);
-</script>
-
-<!-- CART OVERLAY -->
-<div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
-
-<!-- CART DRAWER -->
-<div class="cart-drawer" id="cart-drawer">
-  <div class="cart-header">
-    <div class="cart-header-title">🛒 Your Order</div>
-    <button class="cart-close" onclick="toggleCart()">×</button>
-  </div>
-  <div class="cart-items" id="cart-items">
-    <div class="cart-empty" id="cart-empty">
-      <div class="cart-empty-icon">🍽️</div>
-      <p>Your cart is empty.<br>Browse the menu and add items!</p>
-    </div>
-  </div>
-  <div class="cart-footer" id="cart-footer" style="display:none;">
-    <div class="cart-subtotal">
-      <span class="cart-subtotal-label">Total</span>
-      <span class="cart-subtotal-amount" id="cart-total">KSh 0</span>
-    </div>
-    <div class="cart-note">📍 Delivery: Meridian Court, South B · 💳 Cash or M-Pesa on delivery</div>
-    <button class="btn-checkout" onclick="checkoutWhatsApp()">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      Send Order on WhatsApp
-    </button>
-  </div>
-</div>
-
-<!-- FLOATING WHATSAPP -->
-<div style="position:fixed;bottom:1.8rem;right:1.8rem;z-index:700;">
-  <a href="https://wa.me/254710738012?text=Hi%20Ras%20Bites!%20I'd%20like%20to%20order%20🍔" target="_blank"
-    style="width:60px;height:60px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 24px rgba(37,211,102,.5);text-decoration:none;animation:waPulse 2.5s ease-in-out infinite;">
-    <svg width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-  </a>
-  <style>@keyframes waPulse{0%,100%{box-shadow:0 6px 24px rgba(37,211,102,.5),0 0 0 0 rgba(37,211,102,.4)}70%{box-shadow:0 6px 24px rgba(37,211,102,.5),0 0 0 14px rgba(37,211,102,0)}}</style>
-</div>
-
-<script>
-// ===== CART ENGINE =====
-let cart = [];
-
-function addToCart(name, price, img) {
-  const existing = cart.find(i => i.name === name);
+// ══ CART LOGIC ══
+function addToCart(id, name, price, hasVariant) {
+  let variant = '';
+  if (hasVariant) {
+    variant = selectedVariants[id] || '';
+    if (!variant) { showToast('⚠️ Please choose a spice level first!'); return; }
+  }
+  const cartKey = id + (variant ? '_' + variant : '');
+  const existing = cart.find(i => i.key === cartKey);
   if (existing) {
     existing.qty++;
   } else {
-    cart.push({ name, price, img, qty: 1 });
+    cart.push({ key: cartKey, id, name, price, qty: 1, variant });
   }
-  updateCart();
-  // Open cart drawer
-  document.getElementById('cart-drawer').classList.add('open');
-  document.getElementById('cart-overlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  // Bump animation
-  const badge = document.getElementById('cart-count');
-  badge.classList.remove('bump');
-  void badge.offsetWidth;
-  badge.classList.add('bump');
-  setTimeout(() => badge.classList.remove('bump'), 200);
+  updateCartUI();
+  closeModal();
+  toggleCart(true); // always open cart on add
+  showToast('✅ ' + name + ' added to order!');
 }
 
-function updateCart() {
+function removeFromCart(key) {
+  cart = cart.filter(i => i.key !== key);
+  updateCartUI();
+}
+
+function changeQty(key, delta) {
+  const item = cart.find(i => i.key === key);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) { cart = cart.filter(i => i.key !== key); }
+  updateCartUI();
+}
+
+function clearCart() {
+  cart = [];
+  updateCartUI();
+}
+
+function updateCartUI() {
   const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
   const count = cart.reduce((s, i) => s + i.qty, 0);
-  document.getElementById('cart-count').textContent = count;
-  document.getElementById('cart-total').textContent = 'KSh ' + total.toLocaleString();
-  const footer = document.getElementById('cart-footer');
-  const itemsEl = document.getElementById('cart-items');
+
+  // Badge
+  const badge = document.getElementById('cartBadge');
+  badge.textContent = count;
+  badge.classList.toggle('visible', count > 0);
+
+  // Sticky bar
+  const sticky = document.getElementById('stickyCart');
+  sticky.classList.toggle('visible', count > 0);
+  document.getElementById('stickyCount').textContent = count + (count === 1 ? ' item' : ' items');
+  document.getElementById('stickyTotal').textContent = 'KSh ' + total.toLocaleString();
+
+  // Cart items
+  const cartItemsEl = document.getElementById('cartItems');
+  const cartFoot = document.getElementById('cartFoot');
   if (cart.length === 0) {
-    footer.style.display = 'none';
-    itemsEl.innerHTML = '<div class="cart-empty"><div class="cart-empty-icon">🍽️</div><p>Your cart is empty.<br>Browse the menu and add items!</p></div>';
-    return;
-  }
-  footer.style.display = 'block';
-  itemsEl.innerHTML = cart.map((item, idx) => `
-    <div class="cart-item">
-      <img class="cart-item-img" src="${item.img}" alt="${item.name}" onerror="this.src='https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=100&q=60'">
-      <div class="cart-item-info">
-        <div class="cart-item-name">${item.name}</div>
-        <div class="cart-item-price">KSh ${(item.price * item.qty).toLocaleString()}</div>
-        <div class="cart-item-controls">
-          <button class="qty-btn" onclick="changeQty(${idx},-1)">−</button>
-          <span class="qty-num">${item.qty}</span>
-          <button class="qty-btn" onclick="changeQty(${idx},1)">+</button>
-          <button class="remove-item" onclick="removeItem(${idx})">✕ Remove</button>
+    cartItemsEl.innerHTML = `<div class="cart-empty"><span class="cart-empty-icon">🛒</span>Your cart is empty.<br>Pick something delicious!</div>`;
+    cartFoot.style.display = 'none';
+  } else {
+    cartItemsEl.innerHTML = cart.map(item => `
+      <div class="cart-item">
+        <div class="cart-item-info">
+          <div class="cart-item-name">${item.name}</div>
+          ${item.variant ? `<div class="cart-item-variant">${item.variant}</div>` : ''}
+          <div class="cart-item-price">KSh ${(item.price * item.qty).toLocaleString()}</div>
         </div>
-      </div>
-    </div>`).join('');
+        <div class="qty-control">
+          <button class="qty-btn" onclick="changeQty('${item.key}', -1)">−</button>
+          <span class="qty-num">${item.qty}</span>
+          <button class="qty-btn" onclick="changeQty('${item.key}', 1)">+</button>
+        </div>
+      </div>`).join('');
+    cartFoot.style.display = 'block';
+    document.getElementById('cartTotal').textContent = 'KSh ' + total.toLocaleString();
+
+    // Build WhatsApp message
+    let msg = 'Hi Ras Bites! 🍔 I\'d like to place an order:\n\n';
+    cart.forEach(i => { msg += `• ${i.qty}x ${i.name}${i.variant ? ' (' + i.variant + ')' : ''} — KSh ${(i.price * i.qty).toLocaleString()}\n`; });
+    msg += `\n*Total: KSh ${total.toLocaleString()}*\n\nPlease confirm & advise on delivery. Thank you!`;
+    document.getElementById('cartWaBtn').href = 'https://wa.me/254710738012?text=' + encodeURIComponent(msg);
+  }
 }
 
-function changeQty(idx, delta) {
-  cart[idx].qty += delta;
-  if (cart[idx].qty <= 0) cart.splice(idx, 1);
-  updateCart();
+// ══ CART OPEN/CLOSE ══
+function toggleCart(forceOpen) {
+  const overlay = document.getElementById('cartOverlay');
+  if (forceOpen === true) {
+    overlay.classList.add('open');
+  } else {
+    overlay.classList.toggle('open');
+  }
 }
+function closeCartOnBg(e) { if (e.target === document.getElementById('cartOverlay')) toggleCart(); }
 
-function removeItem(idx) {
-  cart.splice(idx, 1);
-  updateCart();
+// ══ TOAST ══
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
 }
-
-function toggleCart() {
-  const drawer = document.getElementById('cart-drawer');
-  const overlay = document.getElementById('cart-overlay');
-  drawer.classList.toggle('open');
-  overlay.classList.toggle('open');
-  document.body.style.overflow = drawer.classList.contains('open') ? 'hidden' : '';
-}
-
-function checkoutWhatsApp() {
-  if (cart.length === 0) return;
-  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-  const items = cart.map(i => `• ${i.qty}x ${i.name} — KSh ${(i.price * i.qty).toLocaleString()}`).join('\n');
-  const msg = `Hi Ras Bites! 🍔 I'd like to place an order:\n\n${items}\n\n*Total: KSh ${total.toLocaleString()}*\n\nMy name: \nDelivery/Table: \nPayment: M-Pesa / Cash`;
-  window.open('https://wa.me/254710738012?text=' + encodeURIComponent(msg), '_blank');
-}
-
-// Inject Add to Cart buttons into every modal card
-document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('.modal-card').forEach(function(card) {
-    const name = card.querySelector('.modal-card-name')?.textContent?.trim();
-    const priceText = card.querySelector('.modal-card-price')?.textContent?.trim();
-    const img = card.querySelector('img')?.src || '';
-    if (!name || !priceText) return;
-    // Parse price — take first number
-    const price = parseInt(priceText.replace(/[^0-9]/g, '')) || 0;
-    if (price === 0) return;
-    const btn = document.createElement('button');
-    btn.className = 'btn-add-cart';
-    btn.textContent = '+ Add to Order — KSh ' + price.toLocaleString();
-    btn.onclick = function(e) {
-      e.stopPropagation();
-      addToCart(name, price, img);
-    };
-    card.querySelector('.modal-card-body').appendChild(btn);
-  });
-});
 </script>
 </body>
 </html>
+
 

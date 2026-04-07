@@ -296,6 +296,14 @@ footer p{font-size:.75rem;color:rgba(255,255,255,.35);}
 <!-- HERO -->
 <section class="hero">
   <div class="hero-rasta-bg"></div>
+  <!-- Faded ribs background -->
+  <div style="position:absolute;inset:0;z-index:0;overflow:hidden;">
+    <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=1600&q=85" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center;opacity:.13;filter:saturate(1.4) brightness(.7);pointer-events:none;display:block;">
+    <!-- Gradient overlay so text stays readable -->
+    <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,10,10,.95) 0%,rgba(10,10,10,.75) 50%,rgba(10,10,10,.4) 100%);"></div>
+    <!-- Bottom fade -->
+    <div style="position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(to top,var(--black),transparent);"></div>
+  </div>
   <div class="hero-left reveal">
     <div class="hero-tag">Open 24/7 · South B, Nairobi</div>
     <div class="hero-logo-main">
@@ -1185,6 +1193,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </body>
 </html>
+
 
 
 
